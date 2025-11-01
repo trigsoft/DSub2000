@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<style name="Theme.DSub2000.Light.Base" parent="@style/Theme.AppCompat.Light.DarkActionBar">
+		<item name="element_color">@color/lightElement</item>
+		<item name="actionbar_element_color">@color/darkElement</item>
+		<item name="offline_icon">@drawable/main_offline</item>
+		<item name="media_button_backward">@drawable/media_backward</item>
+		<item name="media_button_forward">@drawable/media_forward</item>
+		<item name="media_button_rewind">@drawable/media_rewind</item>
+		<item name="media_button_fastforward">@drawable/media_fastforward</item>
+		<item name="media_button_pause">@drawable/media_pause</item>
+		<item name="media_button_repeat_off">@drawable/media_repeat_off</item>
+		<item name="media_button_repeat_single">@drawable/media_repeat_single</item>
+		<item name="media_button_repeat_all">@drawable/media_repeat_all</item>
+		<item name="media_button_start">@drawable/media_start</item>
+		<item name="media_button_stop">@drawable/media_stop</item>
+		<item name="actionbar_backward">@drawable/actionbar_media_backward</item>
+		<item name="actionbar_forward">@drawable/actionbar_media_forward</item>
+		<item name="actionbar_pause">@drawable/actionbar_media_pause</item>
+		<item name="actionbar_start">@drawable/actionbar_media_start</item>
+		<item name="actionbar_stop">@drawable/actionbar_media_stop</item>
+		<item name="actionbar_rewind">@drawable/actionbar_media_rewind</item>
+		<item name="actionbar_fastforward">@drawable/actionbar_media_fastforward</item>
+		<item name="chat_send">@drawable/ic_menu_chat_send</item>
+		<item name="add">@drawable/ic_action_add</item>
+		<item name="download_none">@drawable/download_none</item>
+		<item name="shuffle">@drawable/actionbar_shuffle</item>
+		<item name="shuffle_button">@drawable/ic_menu_shuffle</item>
+		<item name="refresh">@drawable/actionbar_refresh</item>
+		<item name="search">@drawable/actionbar_search</item>
+		<item name="remove">@drawable/ic_menu_remove</item>
+		<item name="save">@drawable/actionbar_save</item>
+		<item name="volume">@drawable/ic_action_volume</item>
+		<item name="toggle_list">@drawable/action_toggle_list</item>
+		<item name="select_server">@drawable/main_select_server</item>
+		<item name="select_tabs">@drawable/main_select_tabs</item>
+		<item name="playing">@drawable/playing</item>
+		<item name="downloading">@drawable/downloading</item>
+		<item name="bookmark">@drawable/ic_action_bookmark</item>
+		<item name="share">@drawable/ic_menu_share</item>
+		<item name="add_person">@drawable/ic_menu_add_person</item>
+		<item name="rating_bad">@drawable/ic_action_rating_bad</item>
+		<item name="rating_good">@drawable/ic_action_rating_good</item>
+		<item name="rating_combined">@drawable/ic_action_rating_combined</item>
+		<item name="radio">@drawable/actionbar_radio</item>
+		<item name="star">@drawable/ic_toggle_star</item>
+		<item name="download">@drawable/actionbar_download</item>
+		<item name="playback_speed">@drawable/ic_action_playback_speed</item>
+		<item name="drawerHome">@drawable/main_offline</item>
+		<item name="drawerLibrary">@drawable/ic_menu_library</item>
+		<item name="drawerPlaylists">@drawable/ic_menu_playlist</item>
+		<item name="drawerPodcasts">@drawable/ic_menu_podcast</item>
+		<item name="drawerBookmarks">@drawable/ic_menu_bookmark</item>
+		<item name="drawerInternetRadioStations">@drawable/ic_menu_radio</item>
+		<item name="drawerShares">@drawable/ic_menu_share</item>
+		<item name="drawerChat">@drawable/ic_menu_chat</item>
+		<item name="drawerAdmin">@drawable/ic_menu_admin</item>
+		<item name="drawerDownloading">@drawable/ic_menu_download</item>
+		<item name="drawerSettings">@drawable/ic_menu_settings</item>
+		<item name="drawerArrowStyle">@style/DSub2000.DrawerArrow</item>
+		<item name="colorPrimary">@color/lightPrimary</item>
+		<item name="colorPrimaryDark">@color/lightPrimaryDark</item>
+		<item name="colorAccent">@color/lightAccent</item>
+		<item name="actionbarBackgroundColor">@color/lightPrimary</item>
+		<item name="actionbarTitleStyle">@style/TextAppearance.AppCompat.Widget.ActionBar.Title.Inverse</item>
+		<item name="actionbarSubtitleStyle">@style/TextAppearance.AppCompat.Widget.ActionBar.Subtitle.Inverse</item>
+		<item name="actionbarPopupStyle">@style/ThemeOverlay.AppCompat.Light</item>
+		<item name="actionbarThemeStyle">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
+		<item name="android:spinnerItemStyle">@style/DarkSpinnerItem</item>
+		<item name="drawerTitleStyle">@style/TextAppearance.AppCompat.Widget.ActionBar.Title.Inverse</item>
+		<item name="drawerSubtitleStyle">@style/TextAppearance.AppCompat.Widget.ActionBar.Subtitle.Inverse</item>
+		<item name="windowActionModeOverlay">true</item>
+		<item name="actionModeBackground">?attr/colorPrimary</item>
+		<item name="card_background">@android:color/white</item>
+		<item name="cardBackgroundDrawable">@drawable/card_rounded_corners</item>
+		<item name="drawerHeaderBackground">@drawable/drawer_header_light</item>
+	</style>
+	<style name="Theme.DSub2000.Dark.Base" parent="@style/Theme.AppCompat">
+		<item name="element_color">@color/darkElement</item>
+		<item name="actionbar_element_color">@color/darkElement</item>
+		<item name="offline_icon">@drawable/main_offline</item>
+		<item name="media_button_backward">@drawable/media_backward</item>
+		<item name="media_button_forward">@drawable/media_forward</item>
+		<item name="media_button_rewind">@drawable/media_rewind</item>
+		<item name="media_button_fastforward">@drawable/media_fastforward</item>
+		<item name="media_button_pause">@drawable/media_pause</item>
+		<item name="media_button_repeat_off">@drawable/media_repeat_off</item>
+		<item name="media_button_repeat_single">@drawable/media_repeat_single</item>
+		<item name="media_button_repeat_all">@drawable/media_repeat_all</item>
+		<item name="media_button_start">@drawable/media_start</item>
+		<item name="media_button_stop">@drawable/media_stop</item>
+		<item name="actionbar_backward">@drawable/actionbar_media_backward</item>
+		<item name="actionbar_forward">@drawable/actionbar_media_forward</item>
+		<item name="actionbar_pause">@drawable/actionbar_media_pause</item>
+		<item name="actionbar_start">@drawable/actionbar_media_start</item>
+		<item name="actionbar_stop">@drawable/actionbar_media_stop</item>
+		<item name="actionbar_rewind">@drawable/actionbar_media_rewind</item>
+		<item name="actionbar_fastforward">@drawable/actionbar_media_fastforward</item>
+		<item name="chat_send">@drawable/ic_menu_chat_send</item>
+		<item name="add">@drawable/ic_action_add</item>
+		<item name="download_none">@drawable/download_none</item>
+		<item name="shuffle">@drawable/actionbar_shuffle</item>
+		<item name="shuffle_button">@drawable/ic_menu_shuffle</item>
+		<item name="refresh">@drawable/actionbar_refresh</item>
+		<item name="search">@drawable/actionbar_search</item>
+		<item name="remove">@drawable/ic_menu_remove</item>
+		<item name="save">@drawable/actionbar_save</item>
+		<item name="volume">@drawable/ic_action_volume</item>
+		<item name="toggle_list">@drawable/action_toggle_list</item>
+		<item name="select_server">@drawable/main_select_server</item>
+		<item name="select_tabs">@drawable/main_select_tabs</item>
+		<item name="playing">@drawable/playing</item>
+		<item name="downloading">@drawable/downloading</item>
+		<item name="bookmark">@drawable/ic_action_bookmark</item>
+		<item name="share">@drawable/ic_menu_share</item>
+		<item name="add_person">@drawable/ic_menu_add_person</item>
+		<item name="rating_bad">@drawable/ic_action_rating_bad</item>
+		<item name="rating_good">@drawable/ic_action_rating_good</item>
+		<item name="rating_combined">@drawable/ic_action_rating_combined</item>
+		<item name="radio">@drawable/actionbar_radio</item>
+		<item name="star">@drawable/ic_toggle_star</item>
+		<item name="download">@drawable/actionbar_download</item>
+		<item name="playback_speed">@drawable/ic_action_playback_speed</item>
+		<item name="drawerHome">@drawable/main_offline</item>
+		<item name="drawerLibrary">@drawable/ic_menu_library</item>
+		<item name="drawerPlaylists">@drawable/ic_menu_playlist</item>
+		<item name="drawerPodcasts">@drawable/ic_menu_podcast</item>
+		<item name="drawerBookmarks">@drawable/ic_menu_bookmark</item>
+		<item name="drawerInternetRadioStations">@drawable/ic_menu_radio</item>
+		<item name="drawerShares">@drawable/ic_menu_share</item>
+		<item name="drawerChat">@drawable/ic_menu_chat</item>
+		<item name="drawerAdmin">@drawable/ic_menu_admin</item>
+		<item name="drawerDownloading">@drawable/ic_menu_download</item>
+		<item name="drawerSettings">@drawable/ic_menu_settings</item>
+		<item name="drawerArrowStyle">@style/DSub2000.DrawerArrow</item>
+		<item name="colorPrimary">@color/lightPrimary</item>
+		<item name="colorPrimaryDark">@color/lightPrimaryDark</item>
+		<item name="colorAccent">@color/lightAccent</item>
+		<item name="actionbarBackgroundColor">@color/lightPrimary</item>
+		<item name="actionbarTitleStyle">@style/TextAppearance.AppCompat.Widget.ActionBar.Title</item>
+		<item name="actionbarSubtitleStyle">@style/TextAppearance.AppCompat.Widget.ActionBar.Subtitle</item>
+		<item name="actionbarPopupStyle">@style/ThemeOverlay.AppCompat.Dark</item>
+		<item name="actionbarThemeStyle">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
+		<item name="drawerTitleStyle">@style/TextAppearance.AppCompat.Widget.ActionBar.Title</item>
+		<item name="drawerSubtitleStyle">@style/TextAppearance.AppCompat.Widget.ActionBar.Subtitle</item>
+		<item name="windowActionModeOverlay">true</item>
+		<item name="actionModeBackground">?attr/colorPrimary</item>
+		<item name="card_background">@android:color/black</item>
+		<item name="cardBackgroundDrawable">@drawable/card_rounded_corners</item>
+		<item name="drawerHeaderBackground">@drawable/drawer_header_dark</item>
+	</style>
+	<style name="Theme.DSub2000.Light" parent="Theme.DSub2000.Light.Base">
+	</style>
+	<style name="Theme.DSub2000.Dark" parent="Theme.DSub2000.Dark.Base">
+	</style>
+	<style name="Theme.DSub2000.Black.Base" parent="Theme.DSub2000.Dark.Base">
+		<item name="card_background">@color/background_material_dark</item>
+		<item name="cardBackgroundDrawable">@drawable/card_rounded_corners</item>
+		<item name="android:windowBackground">@android:color/black</item>
+	</style>
+	<style name="Theme.DSub2000.Black" parent="Theme.DSub2000.Black.Base">
+	</style>
+	<style name="Theme.DSub2000.Holo.Base" parent="Theme.DSub2000.Dark.Base">
+		<item name="android:windowBackground">@drawable/background</item>
+		<item name="colorPrimary">@color/holoPrimary</item>
+		<item name="colorPrimaryDark">@color/holoPrimaryDark</item>
+		<item name="colorAccent">@color/holoAccent</item>
+		<item name="actionbarBackgroundColor">@color/holoPrimary</item>
+		<item name="drawerHeaderBackground">@drawable/drawer_header_holo</item>
+		<item name="card_background">@color/background_material_dark</item>
+		<item name="cardBackgroundDrawable">@drawable/card_rounded_corners</item>
+	</style>
+	<style name="Theme.DSub2000.Holo" parent="Theme.DSub2000.Holo.Base">
+	</style>
+
+	<style name="Theme.DSub2000.Light.No_Actionbar" parent="Theme.DSub2000.Light">
+		<item name="windowActionBar">false</item>
+		<item name="windowNoTitle">true</item>
+	</style>
+	<style name="Theme.DSub2000.Black.No_Actionbar" parent="Theme.DSub2000.Black">
+		<item name="windowActionBar">false</item>
+		<item name="windowNoTitle">true</item>
+	</style>
+	<style name="Theme.DSub2000.Dark.No_Actionbar" parent="Theme.DSub2000.Dark">
+		<item name="windowActionBar">false</item>
+		<item name="windowNoTitle">true</item>
+	</style>
+	<style name="Theme.DSub2000.Holo.No_Actionbar" parent="Theme.DSub2000.Holo">
+		<item name="windowActionBar">false</item>
+		<item name="windowNoTitle">true</item>
+	</style>
+
+	<style name="Theme.DSub2000.Light.No_Color.Base" parent="Theme.DSub2000.Light.No_Actionbar">
+		<item name="actionbar_element_color">@color/lightElement</item>
+		<item name="actionbarThemeStyle">@style/ThemeOverlay.AppCompat.ActionBar</item>
+		<item name="actionbarBackgroundColor">@android:color/transparent</item>
+		<item name="actionbarTitleStyle">@style/TextAppearance.AppCompat.Widget.ActionBar.Title</item>
+		<item name="actionbarSubtitleStyle">@style/TextAppearance.AppCompat.Widget.ActionBar.Subtitle</item>
+		<item name="android:spinnerItemStyle">@style/LightSpinnerItem</item>
+		<item name="drawerTitleStyle">@style/TextAppearance.AppCompat.Widget.ActionBar.Title.Inverse</item>
+		<item name="drawerSubtitleStyle">@style/TextAppearance.AppCompat.Widget.ActionBar.Subtitle.Inverse</item>
+		<item name="actionbar_backward">@drawable/actionbar_media_backward</item>
+		<item name="actionbar_forward">@drawable/actionbar_media_forward</item>
+		<item name="actionbar_pause">@drawable/actionbar_media_pause</item>
+		<item name="actionbar_start">@drawable/actionbar_media_start</item>
+		<item name="actionbar_stop">@drawable/actionbar_media_stop</item>
+		<item name="actionbar_rewind">@drawable/actionbar_media_rewind</item>
+		<item name="actionbar_fastforward">@drawable/actionbar_media_fastforward</item>
+		<item name="add">@drawable/ic_action_add</item>
+		<item name="shuffle">@drawable/actionbar_shuffle</item>
+		<item name="refresh">@drawable/actionbar_refresh</item>
+		<item name="search">@drawable/actionbar_search</item>
+		<item name="remove">@drawable/ic_menu_remove</item>
+		<item name="save">@drawable/actionbar_save</item>
+		<item name="add_person">@drawable/ic_menu_add_person</item>
+		<item name="radio">@drawable/actionbar_radio</item>
+		<item name="download">@drawable/actionbar_download</item>
+		<item name="actionModeBackground">@color/background_material_light</item>
+		<item name="actionModeStyle">@style/LightActionMode</item>
+		<item name="actionModeCloseButtonStyle">@style/DarkCloseButton</item>
+	</style>
+	<style name="Theme.DSub2000.Black.No_Color.Base" parent="Theme.DSub2000.Black.No_Actionbar">
+		<item name="actionbarBackgroundColor">@android:color/transparent</item>
+		<item name="actionModeBackground">@android:color/black</item>
+	</style>
+	<style name="Theme.DSub2000.Dark.No_Color.Base" parent="Theme.DSub2000.Dark.No_Actionbar">
+		<item name="actionbarBackgroundColor">@android:color/transparent</item>
+		<item name="actionModeBackground">@color/background_material_dark</item>
+	</style>
+	<style name="Theme.DSub2000.Holo.No_Color.Base" parent="Theme.DSub2000.Holo.No_Actionbar">
+		<item name="actionbarBackgroundColor">@android:color/transparent</item>
+		<item name="actionModeBackground">@drawable/background</item>
+	</style>
+
+	<style name="Theme.DSub2000.Light.No_Color" parent="Theme.DSub2000.Light.No_Color.Base">
+	</style>
+	<style name="Theme.DSub2000.Black.No_Color" parent="Theme.DSub2000.Black.No_Color.Base">
+	</style>
+	<style name="Theme.DSub2000.Dark.No_Color" parent="Theme.DSub2000.Dark.No_Color.Base">
+	</style>
+	<style name="Theme.DSub2000.Holo.No_Color" parent="Theme.DSub2000.Holo.No_Color.Base">
+	</style>
+
+	<style name="DSub2000.DrawerArrow" parent="Widget.AppCompat.DrawerArrowToggle">
+		<item name="spinBars">true</item>
+	</style>
+
+	<style name="LightSpinnerItem" parent="Widget.AppCompat.TextView.SpinnerItem">
+		<item name="android:textColor">?android:attr/textColorPrimary</item>
+	</style>
+	<style name="DarkSpinnerItem" parent="Widget.AppCompat.TextView.SpinnerItem">
+		<item name="android:textColor">?android:attr/textColorPrimaryInverse</item>
+	</style>
+	<style name="LightActionMode" parent="@style/Widget.AppCompat.ActionMode">
+		<item name="titleTextStyle">@style/TextAppearance.AppCompat.Widget.ActionBar.Title.Inverse</item>
+		<item name="subtitleTextStyle">@style/TextAppearance.AppCompat.Widget.ActionBar.Subtitle.Inverse</item>
+	</style>
+	<style name="DarkCloseButton" parent="@style/Widget.AppCompat.ActionButton.CloseMode">
+		<item name="colorControlNormal">@android:color/black</item>
+	</style>
+</resources>

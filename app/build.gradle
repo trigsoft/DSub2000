@@ -1,0 +1,105 @@
+apply plugin: 'com.android.application'
+
+android {
+	compileSdkVersion 36
+
+	defaultConfig {
+		applicationId "github.paroj.dsub2000"
+		minSdkVersion 24
+		targetSdkVersion 36
+		versionCode 212
+		versionName '5.6.3'
+		vectorDrawables.useSupportLibrary = true
+		setProperty("archivesBaseName", "DSub2000_$versionName")
+        resourceConfigurations += ['de', 'es', 'fr', 'hu', 'nl', 'pt-rPT', 'ru', 'sv', 'zh']
+        vectorDrawables.useSupportLibrary = true
+		resValue 'string', 'account_type.subsonic', applicationId + ".subsonic"
+		resValue 'string', 'provider.search', applicationId + ".provider.DSubSearchProvider"
+		resValue 'string', 'provider.playlist', applicationId + ".playlists.provider"
+		resValue 'string', 'provider.podcast', applicationId + ".podcasts.provider"
+		resValue 'string', 'provider.starred', applicationId + ".starred.provider"
+		resValue 'string', 'provider.recently_added', applicationId + ".mostrecent.provider"
+		signingConfig signingConfigs.debug
+		testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+	}
+	buildFeatures {
+		buildConfig true
+	}
+	buildTypes {
+		release {
+			minifyEnabled true
+			shrinkResources true
+			proguardFiles 'proguard.cfg'
+			zipAlignEnabled true
+		}
+		fix {
+			minifyEnabled true
+			shrinkResources true
+			proguardFiles 'proguard.cfg'
+			zipAlignEnabled true
+		}
+	}
+	flavorDimensions "version"
+	productFlavors {
+		floss {
+			// FLOSS build (no proprietary libraries)
+			dimension "version"
+		}
+		google {
+			// FLOSS build + Google libraries
+			// Adds ChromeCast support
+			dimension "version"
+		}
+	}
+	packagingOptions {
+		resources {
+			excludes += ['META-INF/beans.xml']
+		}
+	}
+
+	namespace 'github.paroj.dsub2000'
+	lint {
+		checkReleaseBuilds false
+	}
+
+    dependenciesInfo {
+        // Disables dependency metadata when building APKs.
+        includeInApk = false
+        // Disables dependency metadata when building Android App Bundles.
+        includeInBundle = false
+    }
+
+	compileOptions {
+		sourceCompatibility JavaVersion.VERSION_17
+		targetCompatibility JavaVersion.VERSION_17
+	}
+}
+
+dependencies {
+	implementation project(':ServerProxy')
+	implementation fileTree(include: ['*.jar'], dir: 'libs')
+	implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+	implementation 'androidx.appcompat:appcompat:1.7.1'
+	implementation 'androidx.mediarouter:mediarouter:1.8.1'
+	implementation 'androidx.recyclerview:recyclerview:1.4.0'
+	implementation 'androidx.activity:activity:1.10.1'
+	implementation 'com.google.android.material:material:1.12.0'
+	googleImplementation 'com.google.android.gms:play-services-cast:22.1.0'
+	implementation 'com.sothree.slidinguppanel:library:3.4.0'
+	implementation 'de.hdodenhof:circleimageview:3.1.0'
+	implementation 'com.shehabic.droppy:Droppy:0.6.0@aar'
+	implementation 'org.eclipse.jetty:jetty-servlet:9.4.14.v20181114'
+	implementation 'org.eclipse.jetty:jetty-client:9.4.14.v20181114'
+	implementation 'javax.servlet:javax.servlet-api:4.0.1'
+	implementation 'androidx.vectordrawable:vectordrawable:1.2.0'
+	implementation 'org.jupnp:org.jupnp:3.0.3'
+	implementation 'org.jupnp:org.jupnp.support:3.0.3'
+	implementation 'org.jupnp:org.jupnp.android:3.0.3'
+	androidTestImplementation "androidx.test:runner:1.5.2"
+	androidTestImplementation "androidx.test:rules:1.5.0"
+	androidTestImplementation group: 'org.jetbrains.kotlin', name: 'kotlin-stdlib', version: '1.7.10'
+	implementation 'com.esotericsoftware:kryo:5.6.2'
+	implementation 'androidx.fragment:fragment:1.8.8'
+	debugImplementation 'org.slf4j:slf4j-api:2.0.17'  // For jupnp logging in debug builds
+	debugImplementation 'uk.uuid.slf4j:slf4j-android:2.0.17-0'
+}

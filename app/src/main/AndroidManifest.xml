@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+	android:installLocation="internalOnly">
+
+    <instrumentation android:name="android.test.InstrumentationTestRunner"
+		android:targetPackage="github.paroj.dsub2000"
+		android:label="Tests" />
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="28" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" android:maxSdkVersion="22"/>
+	<uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"/>
+	<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" android:maxSdkVersion="28"/>
+	<uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
+	<uses-permission android:name="android.permission.READ_SYNC_SETTINGS"/>
+	<uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS"/>
+	<uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS"/>
+	<uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+	<uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE"/>
+	<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+	<uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+	<uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" />
+	<uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
+
+	<uses-feature android:name="android.hardware.touchscreen" android:required="false" />
+	<uses-feature android:name="android.hardware.bluetooth" android:required="false" />
+	<uses-feature android:name="android.hardware.microphone" android:required="false" />
+	<uses-feature android:name="android.hardware.wifi" android:required="false" />
+	<uses-feature android:name="android.software.leanback" android:required="false"/>
+	<uses-feature android:name="android.hardware.location" android:required="false"/>
+	<uses-feature android:name="android.hardware.location.network" android:required="false"/>
+
+    <supports-screens android:anyDensity="true" android:xlargeScreens="true" android:largeScreens="true" android:normalScreens="true" android:smallScreens="true"/>
+
+    <application android:label="@string/common.appname"
+    	android:backupAgent="github.paroj.dsub2000.util.SettingsBackupAgent"
+    	android:icon="@drawable/launch"
+    	android:theme="@style/Theme.DSub2000.Light"
+		android:largeHeap="true"
+		android:usesCleartextTraffic="true">
+    	
+        <uses-library android:name="android.test.runner" />
+
+		<activity android:name="github.paroj.dsub2000.activity.SubsonicFragmentActivity"
+				  android:configChanges="keyboardHidden"
+				  android:exported="true"
+				  android:launchMode="singleTask">
+			<intent-filter>
+				<action android:name="android.intent.action.MAIN"/>
+				<category android:name="android.intent.category.LAUNCHER"/>
+				<category android:name="android.intent.category.LEANBACK_LAUNCHER"/>
+			</intent-filter>
+		</activity>
+
+        <activity android:name="github.paroj.dsub2000.activity.SettingsActivity"
+                  android:configChanges="orientation|keyboardHidden"
+                  android:launchMode="singleTask"/>
+
+        <activity android:name="github.paroj.dsub2000.activity.VoiceQueryReceiverActivity"
+				  android:exported="true"
+                  android:launchMode="singleTask">
+            <intent-filter>
+                <action android:name="android.media.action.MEDIA_PLAY_FROM_SEARCH" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+
+			<intent-filter>
+				<action android:name="com.google.android.gms.actions.SEARCH_ACTION"/>
+				<category android:name="android.intent.category.DEFAULT" />
+				<category android:name="android.intent.category.BROWSABLE" />
+			</intent-filter>
+        </activity>
+
+        <activity android:name="github.paroj.dsub2000.activity.QueryReceiverActivity"
+				  android:exported="true"
+                  android:launchMode="singleTask">
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH"/>
+            </intent-filter>
+            <meta-data android:name="android.app.searchable" android:resource="@xml/searchable"/>
+        </activity>
+
+		<activity
+			android:name="github.paroj.dsub2000.activity.EditPlayActionActivity"
+			android:label="@string/tasker.start_playing"
+			android:exported="true"
+			android:icon="@drawable/launch">
+
+			<intent-filter>
+				<action android:name="com.twofortyfouram.locale.intent.action.EDIT_SETTING" />
+			</intent-filter>
+		</activity>
+
+        <service android:name="github.paroj.dsub2000.service.DownloadService"
+                 android:label="DSub Playback Service"
+                 android:foregroundServiceType="mediaPlayback"/>
+
+		<service android:name="github.paroj.dsub2000.service.AutoMediaBrowserService"
+				 android:foregroundServiceType="mediaPlayback"
+				 android:exported="true">
+
+			<intent-filter>
+				<action android:name="android.media.browse.MediaBrowserService"/>
+			</intent-filter>
+		</service>
+
+		<service android:name="org.jupnp.android.AndroidUpnpServiceImpl"
+			     android:foregroundServiceType="mediaPlayback|dataSync"/>
+		<service
+			android:name="github.paroj.dsub2000.service.sync.AuthenticatorService"
+			android:foregroundServiceType="mediaPlayback|dataSync"
+			android:exported="true">
+
+			<intent-filter>
+				<action android:name="android.accounts.AccountAuthenticator"/>
+			</intent-filter>
+
+			<meta-data android:name="android.accounts.AccountAuthenticator"
+				android:resource="@xml/authenticator" />
+		</service>
+		<service android:name="github.paroj.dsub2000.service.sync.PlaylistSyncService"
+			android:foregroundServiceType="mediaPlayback|dataSync"
+			android:exported="true"
+			android:process=":sync">
+
+			<intent-filter>
+				<action android:name="android.content.SyncAdapter"/>
+			</intent-filter>
+			<meta-data android:name="android.content.SyncAdapter"
+				android:resource="@xml/playlists_syncadapter" />
+		</service>
+		<service android:name="github.paroj.dsub2000.service.sync.PodcastSyncService"
+			     android:foregroundServiceType="mediaPlayback|dataSync"
+				 android:exported="true"
+				 android:process=":sync">
+
+			<intent-filter>
+				<action android:name="android.content.SyncAdapter"/>
+			</intent-filter>
+			<meta-data android:name="android.content.SyncAdapter"
+					   android:resource="@xml/podcasts_syncadapter" />
+		</service>
+		<service android:name="github.paroj.dsub2000.service.sync.StarredSyncService"
+			     android:foregroundServiceType="dataSync|mediaPlayback"
+				 android:exported="true"
+				 android:process=":sync">
+
+			<intent-filter>
+				<action android:name="android.content.SyncAdapter"/>
+			</intent-filter>
+			<meta-data android:name="android.content.SyncAdapter"
+					   android:resource="@xml/starred_syncadapter" />
+		</service>
+		<service android:name="github.paroj.dsub2000.service.sync.MostRecentSyncService"
+			     android:foregroundServiceType="dataSync|mediaPlayback"
+				 android:exported="true"
+				 android:process=":sync">
+
+			<intent-filter>
+				<action android:name="android.content.SyncAdapter"/>
+			</intent-filter>
+			<meta-data android:name="android.content.SyncAdapter"
+					   android:resource="@xml/mostrecent_syncadapter" />
+		</service>
+
+		<service android:name="github.paroj.dsub2000.service.HeadphoneListenerService"
+			android:foregroundServiceType="mediaPlayback"
+			android:label="DSub Headphone Listener"/>
+		<receiver
+			android:name="github.paroj.dsub2000.receiver.BootReceiver"
+			android:exported="true">
+			<intent-filter>
+				<action
+					android:name="android.intent.action.BOOT_COMPLETED" />
+			</intent-filter>
+		</receiver>
+
+        <receiver android:name="github.paroj.dsub2000.receiver.MediaButtonIntentReceiver"
+			android:exported="true">
+        	<intent-filter>
+				<action android:name="android.intent.action.MEDIA_BUTTON" />
+			</intent-filter>
+        </receiver>
+
+		<receiver android:name="github.paroj.dsub2000.receiver.A2dpIntentReceiver"
+			android:exported="true">
+			<intent-filter>
+				<action android:name="android.music.playstatusrequest"/>
+			</intent-filter>
+		</receiver>
+
+        <receiver
+			android:name="github.paroj.dsub2000.provider.DSubWidget4x1"
+			android:exported="true"
+			android:label="@string/widget.4x1">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+            </intent-filter>
+            <meta-data android:name="android.appwidget.provider" android:resource="@xml/appwidget4x1"/>
+        </receiver>
+		<receiver
+			android:name="github.paroj.dsub2000.provider.DSubWidget4x2"
+			android:exported="true"
+			android:label="@string/widget.4x2">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+            </intent-filter>
+            <meta-data android:name="android.appwidget.provider" android:resource="@xml/appwidget4x2"/>
+        </receiver>
+		<receiver
+			android:name="github.paroj.dsub2000.provider.DSubWidget4x3"
+			android:exported="true"
+			android:label="@string/widget.4x3">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+            </intent-filter>
+            <meta-data android:name="android.appwidget.provider" android:resource="@xml/appwidget4x3"/>
+        </receiver>
+		<receiver
+			android:name="github.paroj.dsub2000.provider.DSubWidget4x4"
+			android:exported="true"
+			android:label="@string/widget.4x4">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+            </intent-filter>
+            <meta-data android:name="android.appwidget.provider" android:resource="@xml/appwidget4x4"/>
+        </receiver>
+
+		<receiver
+			android:name="github.paroj.dsub2000.receiver.PlayActionReceiver"
+			android:exported="true">
+
+			<intent-filter>
+				<action android:name="com.twofortyfouram.locale.intent.action.FIRE_SETTING" />
+			</intent-filter>
+		</receiver>
+
+        <provider android:name="github.paroj.dsub2000.provider.DSubSearchProvider"
+                  android:authorities="@string/provider.search"/>
+		<provider android:name="github.paroj.dsub2000.provider.PlaylistStubProvider"
+			android:authorities="@string/provider.playlist"
+			android:label="@string/button_bar.playlists"
+			android:exported="false"
+			android:syncable="true"/>
+		<provider android:name="github.paroj.dsub2000.provider.PodcastStubProvider"
+			android:authorities="@string/provider.podcast"
+			android:label="@string/button_bar.podcasts"
+			android:exported="false"
+			android:syncable="true"/>
+		<provider android:name="github.paroj.dsub2000.provider.StarredStubProvider"
+				  android:authorities="@string/provider.starred"
+				  android:label="@string/main.albums_starred"
+				  android:exported="false"
+				  android:syncable="true"/>
+		<provider android:name="github.paroj.dsub2000.provider.MostRecentStubProvider"
+				  android:authorities="@string/provider.recently_added"
+				  android:label="@string/main.albums_newest"
+				  android:exported="false"
+				  android:syncable="true"/>
+
+        <meta-data android:name="android.app.default_searchable"
+                   android:value="github.paroj.dsub2000.activity.QueryReceiverActivity"/>
+
+		<meta-data
+			android:name="com.google.android.gms.car.application"
+			android:resource="@xml/auto_app_description" />
+		<meta-data
+			android:name="com.google.android.gms.car.notification.SmallIcon"
+			android:resource="@drawable/stat_notify_playing" />
+
+	</application>
+
+</manifest>

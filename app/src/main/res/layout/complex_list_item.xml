@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="?android:attr/listPreferredItemHeight"
+	android:background="?attr/selectableItemBackground"
+	android:orientation="horizontal"
+	android:paddingLeft="16dp"
+	android:paddingRight="16dp">
+
+	<LinearLayout
+		android:layout_width="0dip"
+		android:layout_height="wrap_content"
+		android:layout_gravity="center_vertical"
+		android:layout_weight="1"
+		android:gravity="left|center_vertical"
+		android:orientation="vertical">
+
+		<TextView
+			android:id="@+id/item_name"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:background="@android:color/transparent"
+			android:textAppearance="?android:attr/textAppearanceMedium"
+			android:textColor="?android:textColorPrimary" />
+
+		<TextView
+			android:id="@+id/item_description"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:background="@android:color/transparent"
+			android:textAppearance="?android:attr/textAppearanceSmall"
+			android:textColor="?android:textColorSecondary" />
+	</LinearLayout>
+
+	<ImageButton
+		android:id="@+id/item_star"
+		android:layout_width="@dimen/Star.Small"
+		android:layout_height="@dimen/Star.Small"
+		android:layout_gravity="right|center_vertical"
+		android:background="@android:color/transparent"
+		android:focusable="false"
+		android:scaleType="fitCenter"
+		android:visibility="gone" />
+
+	<ImageView
+		android:id="@+id/item_more"
+		style="@style/MoreButton"
+		android:layout_width="wrap_content"
+		android:layout_height="fill_parent"
+		android:layout_gravity="right|center_vertical"
+		android:src="?attr/download_none" />
+</LinearLayout>
