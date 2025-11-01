@@ -161,7 +161,13 @@ public class SettingsFragment extends PreferenceCompatFragment implements Shared
 		if(xml != 0) {
 			args.putInt(Constants.INTENT_EXTRA_FRAGMENT_TYPE, xml);
 			newFragment.setArguments(args);
-			replaceFragment(newFragment);
+			
+			// Add to back stack so back button works properly
+			context.getSupportFragmentManager().beginTransaction()
+				.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right)
+				.replace(R.id.fragment_container, newFragment, newFragment.getSupportTag() + "")
+				.addToBackStack(null)
+				.commit();
 		}
 	}
 
@@ -490,7 +496,12 @@ public class SettingsFragment extends PreferenceCompatFragment implements Shared
 				args.putInt(Constants.PREFERENCES_KEY_SERVER_INSTANCE, instance);
 				newFragment.setArguments(args);
 
-				replaceFragment(newFragment);
+				// Add to back stack so back button works properly
+				context.getSupportFragmentManager().beginTransaction()
+					.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right)
+					.replace(R.id.fragment_container, newFragment, newFragment.getSupportTag() + "")
+					.addToBackStack(null)
+					.commit();
 				return false;
 			}
 		});

@@ -55,4 +55,16 @@ public class SettingsActivity extends SubsonicActivity {
 		Toolbar mainToolbar = (Toolbar) findViewById(R.id.main_toolbar);
 		setSupportActionBar(mainToolbar);
 	}
+
+	@Override
+	public void onBackPressed() {
+		// Check if there are fragments in the back stack
+		if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+			// Pop the last fragment from the back stack
+			getSupportFragmentManager().popBackStack();
+		} else {
+			// No more fragments in back stack, use default behavior (go back to main activity)
+			super.onBackPressed();
+		}
+	}
 }
