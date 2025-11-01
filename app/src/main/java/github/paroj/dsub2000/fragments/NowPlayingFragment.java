@@ -845,6 +845,15 @@ public class NowPlayingFragment extends SubsonicFragment implements OnGestureLis
 			hideControlsFuture.cancel(false);
 		}
 
+		// Get the auto-hide delay from preferences (in seconds, 0 = disabled)
+		SharedPreferences prefs = Util.getPreferences(context);
+		int delaySeconds = Integer.parseInt(prefs.getString(Constants.PREFERENCES_KEY_CONTROLS_AUTO_HIDE_DELAY, "3"));
+		
+		// If delay is 0, don't schedule auto-hide
+		if (delaySeconds == 0) {
+			return;
+		}
+
 		final Handler handler = new Handler();
 		Runnable runnable = new Runnable() {
 			@Override
@@ -857,7 +866,7 @@ public class NowPlayingFragment extends SubsonicFragment implements OnGestureLis
 				});
 			}
 		};
-		hideControlsFuture = executorService.schedule(runnable, 3000L, TimeUnit.MILLISECONDS);
+		hideControlsFuture = executorService.schedule(runnable, delaySeconds * 1000L, TimeUnit.MILLISECONDS);
 	}
 
 	private void setControlsVisible(boolean visible) {

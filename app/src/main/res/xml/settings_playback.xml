@@ -85,6 +85,14 @@
             android:key="combineThumbsUpDown"
             android:defaultValue="false"/>
 
+        <ListPreference
+            android:title="@string/settings.controls_auto_hide_delay"
+            android:summary="@string/settings.controls_auto_hide_delay_summary"
+            android:key="controlsAutoHideDelay"
+            android:defaultValue="3"
+            android:entryValues="@array/controlsAutoHideDelayValues"
+            android:entries="@array/controlsAutoHideDelayNames"/>
+
 	</PreferenceCategory>
 
 	<PreferenceCategory

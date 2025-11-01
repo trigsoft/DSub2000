@@ -357,6 +357,8 @@
 	<string name="settings.network_timeout_10000">10 seconds</string>
 	<string name="settings.network_timeout_15000">15 seconds</string>
 	<string name="settings.network_timeout_30000">30 seconds</string>
+	<string name="settings.controls_auto_hide_delay">Controls auto-hide delay</string>
+	<string name="settings.controls_auto_hide_delay_summary">Time before controls auto-hide (0 = disabled)</string>
 	<string name="settings.network_timeout_45000">45 seconds</string>
 	<string name="settings.network_timeout_60000">60 seconds</string>
     <string name="settings.preload_0">0 song</string>

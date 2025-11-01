@@ -192,6 +192,7 @@ public final class Constants {
 	public static final String PREFERENCES_KEY_FASTFORWARD_INTERVAL = "fastforwardInterval";
 	public static final String PREFERENCES_KEY_TAP_COVER_FOR_PLAYLIST = "tapCoverForPlaylist";
 	public static final String PREFERENCES_KEY_COMBINE_THUMBS_UP_DOWN = "combineThumbsUpDown";
+	public static final String PREFERENCES_KEY_CONTROLS_AUTO_HIDE_DELAY = "controlsAutoHideDelay";
 
 	public static final String OFFLINE_SCROBBLE_COUNT = "scrobbleCount";
 	public static final String OFFLINE_SCROBBLE_ID = "scrobbleID";
