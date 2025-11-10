@@ -68,6 +68,7 @@ import github.paroj.dsub2000.view.EditPasswordPreference;
 
 public class SettingsFragment extends PreferenceCompatFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
 	private final static String TAG = SettingsFragment.class.getSimpleName();
+	private static final String NAV_TAG = "FragmentMapping";
 
 	private final Map<String, ServerSettings> serverSettings = new LinkedHashMap<String, ServerSettings>();
 	private boolean testingConnection;
@@ -161,7 +162,9 @@ public class SettingsFragment extends PreferenceCompatFragment implements Shared
 		if(xml != 0) {
 			args.putInt(Constants.INTENT_EXTRA_FRAGMENT_TYPE, xml);
 			newFragment.setArguments(args);
-			
+
+			logFragmentNavigation("onStartNewFragment:" + name, newFragment);
+
 			// Add to back stack so back button works properly
 			context.getSupportFragmentManager().beginTransaction()
 				.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right)
@@ -496,6 +499,8 @@ public class SettingsFragment extends PreferenceCompatFragment implements Shared
 				args.putInt(Constants.PREFERENCES_KEY_SERVER_INSTANCE, instance);
 				newFragment.setArguments(args);
 
+				logFragmentNavigation("serverPreference:" + instance, newFragment);
+
 				// Add to back stack so back button works properly
 				context.getSupportFragmentManager().beginTransaction()
 					.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right)
@@ -690,6 +695,42 @@ public class SettingsFragment extends PreferenceCompatFragment implements Shared
 		screen.addPreference(serverRemoveServerPreference);
 
 		return screen;
+	}
+
+	private void logFragmentNavigation(String source, SettingsFragment fragment) {
+		if(fragment == null) {
+			return;
+		}
+
+		Bundle args = fragment.getArguments();
+		StringBuilder builder = new StringBuilder();
+		if(args != null && !args.isEmpty()) {
+			for(String key : args.keySet()) {
+				Object value = args.get(key);
+				builder.append(key)
+					.append('=')
+					.append(describeValue(value))
+					.append(' ');
+			}
+		} else {
+			builder.append("<no-args>");
+		}
+
+		Log.d(NAV_TAG, "Navigating [" + source + "] -> " + fragment + " (" + fragment.getClass().getSimpleName() + "), supportTag=" + fragment.getSupportTag() + ", args=" + builder.toString().trim());
+	}
+
+	private String describeValue(Object value) {
+		if(value == null) {
+			return "null";
+		}
+		if(value instanceof Bundle) {
+			return "Bundle(" + ((Bundle) value).keySet().size() + " keys)";
+		}
+		String text = String.valueOf(value);
+		if(text.length() > 48) {
+			return text.substring(0, 45) + "...";
+		}
+		return text;
 	}
 
 	private void setHideMedia(boolean hide) {

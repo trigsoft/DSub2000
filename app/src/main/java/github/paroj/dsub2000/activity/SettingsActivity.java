@@ -21,6 +21,7 @@ package github.paroj.dsub2000.activity;
 import android.annotation.TargetApi;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import androidx.appcompat.widget.Toolbar;
 
 import github.paroj.dsub2000.R;
@@ -46,6 +47,8 @@ public class SettingsActivity extends SubsonicActivity {
 
 			fragment.setArguments(args);
 			fragment.setRetainInstance(true);
+
+			Log.d("FragmentMapping", "Navigating [SettingsActivityRoot] -> " + fragment + " (" + fragment.getClass().getSimpleName() + "), argsKeys=" + args.keySet());
 
 			currentFragment = fragment;
 			currentFragment.setPrimaryFragment(true);
