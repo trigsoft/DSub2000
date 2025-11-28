@@ -138,6 +138,27 @@ public class DownloadService extends Service {
 	private final List<DownloadFile> backgroundDownloadList = new ArrayList<DownloadFile>();
 	private final List<DownloadFile> toDelete = new ArrayList<DownloadFile>();
 	private final Handler handler = new Handler();
+	private boolean playbackStateUpdatePending;
+	private final Runnable playbackStateUpdateRunnable = new Runnable() {
+		@Override
+		public void run() {
+			playbackStateUpdatePending = false;
+			if(mRemoteControl != null) {
+				mRemoteControl.setPlaybackState(playerState.getRemoteControlClientPlayState(), getCurrentPlayingIndex(), size());
+			}
+		}
+	};
+
+	private void requestPlaybackStateUpdate() {
+		if(mRemoteControl == null) {
+			return;
+		}
+		if(playbackStateUpdatePending) {
+			return;
+		}
+		playbackStateUpdatePending = true;
+		handler.post(playbackStateUpdateRunnable);
+	}
 	private Handler mediaPlayerHandler;
 	private final DownloadServiceLifecycleSupport lifecycleSupport = new DownloadServiceLifecycleSupport(this);
 	private ShufflePlayBuffer shufflePlayBuffer;
@@ -1542,9 +1563,7 @@ public class DownloadService extends Service {
 		} else if(hide) {
 			Notifications.hidePlayingNotification(this, this, handler);
 		}
-		if(mRemoteControl != null) {
-			mRemoteControl.setPlaybackState(playerState.getRemoteControlClientPlayState(), getCurrentPlayingIndex(), size());
-		}
+		requestPlaybackStateUpdate();
 
 		if (playerState == STARTED) {
 			scrobbler.scrobble(this, currentPlaying, false, false);
@@ -2952,9 +2971,6 @@ public class DownloadService extends Service {
 		final Integer duration = getPlayerDuration();
 		final boolean isSeekable = isSeekable();
 		final int position = getPlayerPosition();
-		final int index = getCurrentPlayingIndex();
-		final int queueSize = size();
-
 		for (final OnSongChangedListener listener : onSongChangedListeners) {
 			handler.post(new Runnable() {
 				@Override
@@ -2967,14 +2983,7 @@ public class DownloadService extends Service {
 		}
 
 		if(manual) {
-			handler.post(new Runnable() {
-				@Override
-				public void run() {
-					if(mRemoteControl != null) {
-						mRemoteControl.setPlaybackState(playerState.getRemoteControlClientPlayState(), index, queueSize);
-					}
-				}
-			});
+			requestPlaybackStateUpdate();
 		}
 
 		// Setup next playing at least a couple of seconds into the song since both Chromecast and some DLNA clients report PLAYING when still PREPARING

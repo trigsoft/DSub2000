@@ -188,17 +188,57 @@ public class ImageLoader {
 			font.setFlags(Paint.ANTI_ALIAS_FLAG);
 			font.setColor(Color.WHITE);
 			font.setTextSize(3.0f + size * 0.07f);
+			float x = size * 0.05f;
+			float maxWidth = size * 0.95f;
+			float topY = size * 0.55f;
+			float bottomY = size * 0.75f;
 
 			if(topText != null) {
-				canvas.drawText(topText, size * 0.05f, size * 0.6f, font);
+				drawWrappedText(canvas, font, topText, x, topY, maxWidth);
 			}
 
 			if(bottomText != null) {
-				canvas.drawText(bottomText, size * 0.05f, size * 0.8f, font);
+				drawWrappedText(canvas, font, bottomText, x, bottomY, maxWidth);
 			}
 		}
 
 		return bitmap;
+	}
+
+	private void drawWrappedText(Canvas canvas, Paint paint, String text, float x, float y, float maxWidth) {
+		if(text == null || text.length() == 0) {
+			return;
+		}
+
+		float availableWidth = Math.max(0, maxWidth - x);
+		float lineHeight = paint.getTextSize() * 1.1f;
+		String[] words = text.split("\\s+");
+		StringBuilder line = new StringBuilder();
+		for(String word : words) {
+			String candidate = line.length() == 0 ? word : line + " " + word;
+			if(paint.measureText(candidate) <= availableWidth) {
+				line.setLength(0);
+				line.append(candidate);
+			} else {
+				if(line.length() > 0) {
+					canvas.drawText(line.toString(), x, y, paint);
+					y += lineHeight;
+					line.setLength(0);
+				}
+				int start = 0;
+				int len = word.length();
+				while(start < len) {
+					int count = paint.breakText(word, start, len, true, availableWidth, null);
+					canvas.drawText(word, start, start + count, x, y, paint);
+					start += count;
+					y += lineHeight;
+				}
+			}
+		}
+
+		if(line.length() > 0) {
+			canvas.drawText(line.toString(), x, y, paint);
+		}
 	}
 
 	public Bitmap getCachedImage(Context context, MusicDirectory.Entry entry, boolean large) {
