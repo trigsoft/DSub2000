@@ -239,6 +239,7 @@ public class SearchFragment extends SubsonicFragment implements SectionAdapter.O
 		Bundle args = new Bundle();
 		args.putString(Constants.INTENT_EXTRA_NAME_ID, album.getId());
 		args.putString(Constants.INTENT_EXTRA_NAME_NAME, album.getTitle());
+		args.putBoolean(Constants.INTENT_EXTRA_ALBUM_DETAIL, true);
 		if(autoplay) {
 			args.putBoolean(Constants.INTENT_EXTRA_NAME_AUTOPLAY, true);
 		}

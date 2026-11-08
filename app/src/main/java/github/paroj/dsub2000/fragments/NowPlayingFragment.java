@@ -199,7 +199,7 @@ public class NowPlayingFragment extends SubsonicFragment implements OnGestureLis
 		touchHelper.attachToRecyclerView(playlistView);
 
 		starButton = (ImageButton)rootView.findViewById(R.id.download_star);
-		if(Util.getPreferences(context).getBoolean(Constants.PREFERENCES_KEY_MENU_STAR, true)) {
+		if(MenuUtil.showSongStar(Util.getPreferences(context))) {
 			starButton.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {

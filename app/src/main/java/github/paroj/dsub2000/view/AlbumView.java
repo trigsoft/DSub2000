@@ -40,6 +40,7 @@ public class AlbumView extends UpdateView2<MusicDirectory.Entry, ImageLoader> {
 	private TextView titleView;
 	private TextView artistView;
 	private boolean showArtist = true;
+	private boolean albumMenuOptions;
 	private String coverArtId;
 
 	public AlbumView(Context context, boolean cell) {
@@ -66,6 +67,14 @@ public class AlbumView extends UpdateView2<MusicDirectory.Entry, ImageLoader> {
 
 	public void setShowArtist(boolean showArtist) {
 		this.showArtist = showArtist;
+	}
+
+	public void setAlbumMenuOptions(boolean albumMenuOptions) {
+		this.albumMenuOptions = albumMenuOptions;
+	}
+
+	public boolean usesAlbumMenuOptions() {
+		return albumMenuOptions;
 	}
 
 	protected void setObjectImpl(MusicDirectory.Entry album, ImageLoader imageLoader) {

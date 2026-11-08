@@ -37,6 +37,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
@@ -44,6 +45,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
+import com.google.android.material.appbar.MaterialToolbar;
 
 import java.io.File;
 import java.util.Date;
@@ -96,7 +98,8 @@ public class SubsonicFragmentActivity extends SubsonicActivity implements Downlo
 	private boolean isPanelClosing = false;
 	private NowPlayingFragment nowPlayingFragment;
 	private SubsonicFragment secondaryFragment;
-	private Toolbar mainToolbar;
+	private MaterialToolbar mainToolbar;
+	private float mainToolbarElevation;
 	private Toolbar nowPlayingToolbar;
 
 	private View bottomBar;
@@ -273,7 +276,8 @@ public class SubsonicFragmentActivity extends SubsonicActivity implements Downlo
 		}
 
 		bottomBar = findViewById(R.id.bottom_bar);
-		mainToolbar = (Toolbar) findViewById(R.id.main_toolbar);
+		mainToolbar = (MaterialToolbar) findViewById(R.id.main_toolbar);
+		mainToolbarElevation = mainToolbar.getElevation();
 		nowPlayingToolbar = (Toolbar) findViewById(R.id.now_playing_toolbar);
 		coverArtView = (ImageView) bottomBar.findViewById(R.id.album_art);
 		trackView = (TextView) bottomBar.findViewById(R.id.track_name);
@@ -591,6 +595,38 @@ public class SubsonicFragmentActivity extends SubsonicActivity implements Downlo
 		} else {
 			super.removeCurrent();
 		}
+	}
+
+	@Override
+	public boolean onPrepareOptionsMenu(Menu menu) {
+		if(slideUpPanel != null && slideUpPanel.getPanelState() != SlidingUpPanelLayout.PanelState.EXPANDED) {
+			recreateSpinner();
+		}
+		return super.onPrepareOptionsMenu(menu);
+	}
+
+	@Override
+	protected void recreateSpinner() {
+		if(mainToolbar == null) {
+			super.recreateSpinner();
+			return;
+		}
+
+		boolean centeredAlbumTitle = !isTv()
+				&& currentFragment instanceof SelectDirectoryFragment
+				&& ((SelectDirectoryFragment) currentFragment).isAlbumDetailHeader();
+		mainToolbar.setTitleCentered(centeredAlbumTitle);
+		mainToolbar.setElevation(centeredAlbumTitle ? 0f : mainToolbarElevation);
+		if(!centeredAlbumTitle) {
+			super.recreateSpinner();
+			return;
+		}
+
+		getSupportActionBar().setDisplayShowCustomEnabled(false);
+		getSupportActionBar().setDisplayShowTitleEnabled(true);
+		getSupportActionBar().setTitle(currentFragment.getTitle());
+		drawerToggle.setDrawerIndicatorEnabled(backStack.isEmpty());
+		getSupportActionBar().setDisplayHomeAsUpEnabled(!backStack.isEmpty());
 	}
 
 	@Override

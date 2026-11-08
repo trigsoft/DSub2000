@@ -124,22 +124,71 @@
 			android:key="showDelete"
 			android:defaultValue="false"/>
 
+	</PreferenceCategory>
+
+	<PreferenceCategory
+		android:title="@string/settings.menu_options.other_title">
+
 		<CheckBoxPreference
 			android:title="@string/common.star"
-			android:summary="@string/settings.menu_options.star_summary"
+			android:summary="@string/settings.menu_options.other_star_summary"
 			android:key="showStar"
 			android:defaultValue="true"/>
 
 		<CheckBoxPreference
 			android:title="@string/menu.share"
-			android:summary="@string/settings.menu_options.shared_summary"
+			android:summary="@string/settings.menu_options.other_shared_summary"
 			android:key="showShared"
 			android:defaultValue="true"/>
 
 		<CheckBoxPreference
 			android:title="@string/menu.rate"
-			android:summary="@string/settings.menu_options.rate_summary"
+			android:summary="@string/settings.menu_options.other_rate_summary"
 			android:key="showRating"
+			android:defaultValue="true"/>
+	</PreferenceCategory>
+
+	<PreferenceCategory
+		android:title="@string/settings.menu_options.songs_title">
+
+		<CheckBoxPreference
+			android:title="@string/common.star"
+			android:summary="@string/settings.menu_options.song_star_summary"
+			android:key="showSongStar"
+			android:defaultValue="true"/>
+
+		<CheckBoxPreference
+			android:title="@string/menu.share"
+			android:summary="@string/settings.menu_options.song_shared_summary"
+			android:key="showSongShared"
+			android:defaultValue="true"/>
+
+		<CheckBoxPreference
+			android:title="@string/menu.rate"
+			android:summary="@string/settings.menu_options.song_rate_summary"
+			android:key="showSongRating"
+			android:defaultValue="true"/>
+	</PreferenceCategory>
+
+	<PreferenceCategory
+		android:title="@string/settings.menu_options.albums_title">
+
+		<CheckBoxPreference
+			android:title="@string/common.star"
+			android:summary="@string/settings.menu_options.album_star_summary"
+			android:key="showAlbumStar"
+			android:defaultValue="true"/>
+
+		<CheckBoxPreference
+			android:title="@string/menu.share"
+			android:summary="@string/settings.menu_options.album_shared_summary"
+			android:key="showAlbumShared"
+			android:defaultValue="true"/>
+
+		<CheckBoxPreference
+			android:title="@string/menu.rate"
+			android:summary="@string/settings.menu_options.album_rate_summary"
+			android:key="showAlbumRating"
 			android:defaultValue="true"/>
 	</PreferenceCategory>
 </PreferenceScreen>

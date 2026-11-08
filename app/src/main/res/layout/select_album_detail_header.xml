@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:id="@+id/select_album_header_wrapper"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content">
+
+	<LinearLayout
+		android:id="@+id/select_album_header"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:orientation="vertical"
+		android:gravity="center_horizontal"
+		android:paddingLeft="25dp"
+		android:paddingRight="25dp"
+		android:paddingTop="16dp"
+		android:paddingBottom="20dp">
+
+		<github.paroj.dsub2000.view.RecyclingImageView
+			android:id="@+id/select_album_art"
+			android:layout_width="@dimen/AlbumArt.Detail"
+			android:layout_height="@dimen/AlbumArt.Detail"
+			android:background="@drawable/album_art_rounded"
+			android:scaleType="fitCenter"
+			android:contentDescription="@null" />
+
+		<TextView
+			android:id="@+id/select_album_title"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="12dp"
+			android:gravity="center"
+			android:maxLines="2"
+			android:ellipsize="end"
+			android:textSize="22sp"
+			android:textStyle="normal"
+			android:textColor="?android:attr/textColorPrimary" />
+
+		<TextView
+			android:id="@+id/select_album_artist"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:gravity="center"
+			android:maxLines="2"
+			android:ellipsize="end"
+			android:textSize="22sp"
+			android:textColor="?attr/colorAccent" />
+
+		<TextView
+			android:id="@+id/select_album_song_count"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="12dp"
+			android:gravity="center"
+			android:maxLines="2"
+			android:ellipsize="end"
+			android:textSize="14sp"
+			android:textColor="?android:attr/textColorSecondary" />
+
+		<TextView
+			android:id="@+id/select_album_song_length"
+			android:layout_width="0dp"
+			android:layout_height="0dp"
+			android:visibility="gone" />
+
+		<LinearLayout
+			android:id="@+id/select_album_play_controls"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="12dp"
+			android:baselineAligned="false"
+			android:orientation="horizontal">
+
+			<LinearLayout
+				android:id="@+id/select_album_play"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:layout_marginEnd="10dp"
+				android:background="@drawable/album_detail_action_background"
+				android:clickable="true"
+				android:focusable="true"
+				android:gravity="center"
+				android:minHeight="48dp"
+				android:orientation="horizontal"
+				android:padding="8dp">
+
+				<ImageView
+					android:layout_width="24dp"
+					android:layout_height="24dp"
+					android:src="?attr/media_button_start"
+					app:tint="?attr/colorAccent"
+					android:contentDescription="@null" />
+
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_marginStart="6dp"
+					android:text="@string/common.play_now"
+					android:textColor="?attr/colorAccent"
+					android:textSize="16sp"
+					android:maxLines="2"
+					android:ellipsize="end" />
+			</LinearLayout>
+
+			<LinearLayout
+				android:id="@+id/select_album_shuffle"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:layout_marginStart="10dp"
+				android:background="@drawable/album_detail_action_background"
+				android:clickable="true"
+				android:focusable="true"
+				android:gravity="center"
+				android:minHeight="48dp"
+				android:orientation="horizontal"
+				android:padding="8dp">
+
+				<ImageView
+					android:layout_width="24dp"
+					android:layout_height="24dp"
+					android:src="?attr/shuffle_button"
+					app:tint="?attr/colorAccent"
+					android:contentDescription="@null" />
+
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_marginStart="6dp"
+					android:text="@string/common.play_shuffled"
+					android:textColor="?attr/colorAccent"
+					android:textSize="16sp"
+					android:maxLines="2"
+					android:ellipsize="end" />
+			</LinearLayout>
+		</LinearLayout>
+
+		<LinearLayout
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="8dp"
+			android:gravity="center"
+			android:orientation="horizontal">
+
+			<LinearLayout
+				android:id="@+id/select_album_rate_wrapper"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content">
+
+				<RatingBar
+					android:id="@+id/select_album_rate"
+					style="@android:style/Widget.Holo.RatingBar.Small"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_gravity="center_vertical"
+					android:numStars="5" />
+			</LinearLayout>
+
+			<ImageButton
+				android:id="@+id/select_album_star"
+				style="@style/BasicButton"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_gravity="center_vertical"
+				android:src="?attr/star"
+				android:contentDescription="@string/common.star"
+				app:tint="?attr/element_color" />
+
+			<ImageView
+				android:id="@+id/select_album_share"
+				style="@style/BasicButton"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_gravity="center_vertical"
+				android:scaleType="fitCenter"
+				android:src="?attr/share"
+				android:contentDescription="@string/menu.share" />
+		</LinearLayout>
+	</LinearLayout>
+
+	<View
+		android:layout_width="match_parent"
+		android:layout_height="1px"
+		android:layout_gravity="bottom"
+		android:background="?attr/colorPrimary" />
+</FrameLayout>

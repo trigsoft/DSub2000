@@ -96,6 +96,7 @@ public class SearchAdapter extends ExpandableSectionAdapter<Serializable> {
 		UpdateView view = holder.getUpdateView();
 		if(viewType == VIEW_TYPE_ALBUM_CELL || viewType == VIEW_TYPE_ALBUM_LINE) {
 			AlbumView albumView = (AlbumView) view;
+			albumView.setAlbumMenuOptions(true);
 			albumView.setObject((Entry) item, imageLoader);
 		} else if(viewType == VIEW_TYPE_SONG) {
 			SongView songView = (SongView) view;

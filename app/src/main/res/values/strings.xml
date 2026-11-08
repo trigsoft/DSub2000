@@ -446,6 +446,9 @@
 	<string name="settings.sync_notification">Show Sync Notification</string>
 	<string name="settings.sync_notification_summary">Show a notification after new media has been synced</string>
 	<string name="settings.menu_options.title">Optional Menu Options</string>
+	<string name="settings.menu_options.other_title">Other Items</string>
+	<string name="settings.menu_options.songs_title">Songs</string>
+	<string name="settings.menu_options.albums_title">Albums</string>
 	<string name="settings.menu_options.play_now_summary">Show Now in menus</string>
 	<string name="settings.menu_options.play_shuffled_summary">Show Shuffled in menus</string>
 	<string name="settings.menu_options.play_next_summary">Show Play Next in menus</string>
@@ -456,6 +459,15 @@
 	<string name="settings.menu_options.star_summary">Show Star in menus</string>
 	<string name="settings.menu_options.shared_summary">Show Share in menus</string>
 	<string name="settings.menu_options.rate_summary">Show Rating in menus</string>
+	<string name="settings.menu_options.other_star_summary">Show Star for other items, such as artists and playlists</string>
+	<string name="settings.menu_options.other_shared_summary">Show Share for other items, such as playlists</string>
+	<string name="settings.menu_options.other_rate_summary">Show Rating for other items</string>
+	<string name="settings.menu_options.song_star_summary">Show Star for songs</string>
+	<string name="settings.menu_options.song_shared_summary">Show Share for songs</string>
+	<string name="settings.menu_options.song_rate_summary">Show Rating for songs</string>
+	<string name="settings.menu_options.album_star_summary">Show Star for albums</string>
+	<string name="settings.menu_options.album_shared_summary">Show Share for albums</string>
+	<string name="settings.menu_options.album_rate_summary">Show Rating for albums</string>
 	<string name="settings.browse_by_tags">Browse By Tags</string>
 	<string name="settings.browse_by_tags_summary">Browse by tags instead of by folder structure.  Requires Subsonic 4.7+</string>
 	<string name="settings.disable_exit_prompt">Disable Exit Prompt</string>

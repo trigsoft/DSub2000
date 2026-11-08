@@ -46,6 +46,7 @@ public class EntryGridAdapter extends SectionAdapter<Entry> {
 	private boolean largeAlbums;
 	private boolean showArtist = false;
 	private boolean showAlbum = false;
+	private boolean albumMenuOptions;
 	private boolean removeFromPlaylist = false;
 	private View header;
 
@@ -86,6 +87,7 @@ public class EntryGridAdapter extends SectionAdapter<Entry> {
 		if(viewType == VIEW_TYPE_ALBUM_CELL || viewType == VIEW_TYPE_ALBUM_LINE) {
 			AlbumView albumView = (AlbumView) view;
 			albumView.setShowArtist(showArtist);
+			albumView.setAlbumMenuOptions(albumMenuOptions);
 			albumView.setObject(entry, imageLoader);
 		} else if(viewType == VIEW_TYPE_SONG) {
 			SongView songView = (SongView) view;
@@ -124,6 +126,10 @@ public class EntryGridAdapter extends SectionAdapter<Entry> {
 
 	public void setShowArtist(boolean showArtist) {
 		this.showArtist = showArtist;
+	}
+
+	public void setAlbumMenuOptions(boolean albumMenuOptions) {
+		this.albumMenuOptions = albumMenuOptions;
 	}
 
 	public void setShowAlbum(boolean showAlbum) {

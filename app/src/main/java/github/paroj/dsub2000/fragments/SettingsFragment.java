@@ -276,6 +276,12 @@ public class SettingsFragment extends PreferenceCompatFragment implements Shared
 		openToTab = (ListPreference) this.findPreference(Constants.PREFERENCES_KEY_OPEN_TO_TAB);
 
 		settings = Util.getPreferences(context);
+		migrateMenuPreference(Constants.PREFERENCES_KEY_MENU_STAR, Constants.PREFERENCES_KEY_SONG_MENU_STAR);
+		migrateMenuPreference(Constants.PREFERENCES_KEY_MENU_SHARED, Constants.PREFERENCES_KEY_SONG_MENU_SHARED);
+		migrateMenuPreference(Constants.PREFERENCES_KEY_MENU_RATING, Constants.PREFERENCES_KEY_SONG_MENU_RATING);
+		migrateMenuPreference(Constants.PREFERENCES_KEY_MENU_STAR, Constants.PREFERENCES_KEY_ALBUM_MENU_STAR);
+		migrateMenuPreference(Constants.PREFERENCES_KEY_MENU_SHARED, Constants.PREFERENCES_KEY_ALBUM_MENU_SHARED);
+		migrateMenuPreference(Constants.PREFERENCES_KEY_MENU_RATING, Constants.PREFERENCES_KEY_ALBUM_MENU_RATING);
 		serverCount = settings.getInt(Constants.PREFERENCES_KEY_SERVER_COUNT, 1);
 
 		if(cacheSize != null) {
@@ -380,6 +386,17 @@ public class SettingsFragment extends PreferenceCompatFragment implements Shared
 		prefs.registerOnSharedPreferenceChangeListener(this);
 
 		update();
+	}
+
+	private void migrateMenuPreference(String oldKey, String newKey) {
+		if (!settings.contains(newKey)) {
+			boolean value = settings.getBoolean(oldKey, true);
+			settings.edit().putBoolean(newKey, value).apply();
+			CheckBoxPreference preference = (CheckBoxPreference) findPreference(newKey);
+			if (preference != null) {
+				preference.setChecked(value);
+			}
+		}
 	}
 
 	private void scheduleBackup() {

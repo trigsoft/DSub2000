@@ -1570,6 +1570,7 @@ public class SubsonicFragment extends Fragment implements SwipeRefreshLayout.OnR
 			args.putString(Constants.INTENT_EXTRA_NAME_ID, entry.getParent());
 		}
 		args.putString(Constants.INTENT_EXTRA_NAME_NAME, entry.getAlbum());
+		args.putBoolean(Constants.INTENT_EXTRA_ALBUM_DETAIL, true);
 		fragment.setArguments(args);
 
 		replaceFragment(fragment, true);

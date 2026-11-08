@@ -41,6 +41,7 @@ public final class Constants {
     public static final String INTENT_EXTRA_NAME_ID = "subsonic.id";
     public static final String INTENT_EXTRA_NAME_NAME = "subsonic.name";
 	public static final String INTENT_EXTRA_NAME_DIRECTORY = "subsonic.directory";
+	public static final String INTENT_EXTRA_ALBUM_DETAIL = "subsonic.albumDetail";
 	public static final String INTENT_EXTRA_NAME_CHILD_ID = "subsonic.child.id";
     public static final String INTENT_EXTRA_NAME_ARTIST = "subsonic.artist";
     public static final String INTENT_EXTRA_NAME_TITLE = "subsonic.title";
@@ -154,6 +155,10 @@ public final class Constants {
 	public static final String PREFERENCES_KEY_MENU_DELETE = "showDelete";
 	public static final String PREFERENCES_KEY_MENU_STAR = "showStar";
 	public static final String PREFERENCES_KEY_MENU_SHARED = "showShared";
+	public static final String PREFERENCES_KEY_SONG_MENU_STAR = "showSongStar";
+	public static final String PREFERENCES_KEY_SONG_MENU_SHARED = "showSongShared";
+	public static final String PREFERENCES_KEY_ALBUM_MENU_STAR = "showAlbumStar";
+	public static final String PREFERENCES_KEY_ALBUM_MENU_SHARED = "showAlbumShared";
 	public static final String PREFERENCES_KEY_SHARED_ENABLED = "sharedEnabled";
 	public static final String PREFERENCES_KEY_BROWSE_TAGS = "browseTags";
 	public static final String PREFERENCES_KEY_OPEN_TO_TAB = "openToTab";
@@ -167,6 +172,8 @@ public final class Constants {
 	public static final String PREFERENCES_KEY_SERVER_SYNC = "serverSync";
 	public static final String PREFERENCES_KEY_RECENT_COUNT = "mostRecentCount";
 	public static final String PREFERENCES_KEY_MENU_RATING = "showRating";
+	public static final String PREFERENCES_KEY_SONG_MENU_RATING = "showSongRating";
+	public static final String PREFERENCES_KEY_ALBUM_MENU_RATING = "showAlbumRating";
 	public static final String PREFERENCES_KEY_REPLAY_GAIN = "replayGain";
 	public static final String PREFERENCES_KEY_REPLAY_GAIN_BUMP = "replayGainBump2";
 	public static final String PREFERENCES_KEY_REPLAY_GAIN_UNTAGGED = "replayGainUntagged2";
