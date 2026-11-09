@@ -1122,27 +1122,26 @@ public class SelectDirectoryFragment extends SubsonicFragment implements Section
 
 		return albumDetailRequested
 				|| (Util.isTagBrowsing(context) && !Util.isOffline(context))
-				|| hasAlbumTrackMetadata(loadedDirectory);
+				|| hasAlbumTrackMetadata(loadedDirectory, directory);
 	}
 
-	private boolean hasAlbumTrackMetadata(MusicDirectory loadedDirectory) {
+	static boolean hasAlbumTrackMetadata(MusicDirectory loadedDirectory, Entry directory) {
 		if (loadedDirectory == null || loadedDirectory.getChildren().isEmpty()) {
 			return false;
 		}
 
-		String albumName = loadedDirectory.getName();
-		if (albumName == null || albumName.trim().isEmpty()) {
-			albumName = name;
-		}
-		if (albumName == null || albumName.trim().isEmpty()) {
-			return false;
-		}
-
+		String albumName = null;
 		String albumArtist = directory == null ? null : directory.getArtist();
 		for (Entry entry : loadedDirectory.getChildren()) {
 			if (entry.isDirectory()
 					|| entry.getAlbum() == null
-					|| !albumName.trim().equalsIgnoreCase(entry.getAlbum().trim())) {
+					|| entry.getAlbum().trim().isEmpty()) {
+				return false;
+			}
+			String trackAlbum = entry.getAlbum().trim();
+			if (albumName == null) {
+				albumName = trackAlbum;
+			} else if (!albumName.equalsIgnoreCase(trackAlbum)) {
 				return false;
 			}
 
