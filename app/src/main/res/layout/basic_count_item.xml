@@ -9,10 +9,13 @@
 
 	<TextView
 		android:id="@+id/basic_count_name"
-		android:layout_width="wrap_content"
+		android:layout_width="0dp"
 		android:layout_height="fill_parent"
+		android:layout_weight="1"
 		android:background="@android:color/transparent"
 		android:gravity="left|center_vertical"
+		android:singleLine="true"
+		android:ellipsize="end"
 		android:text="Text"
 		android:textAppearance="?android:attr/textAppearanceMedium"
 		android:textColor="?android:textColorPrimary" />

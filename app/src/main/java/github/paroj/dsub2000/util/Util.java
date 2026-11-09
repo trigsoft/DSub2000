@@ -1235,7 +1235,7 @@ public final class Util {
 	public static void showDetailsDialog(Context context, String title, List<String> headers, final List<String> details) {
 		ListView listView = new ListView(context);
 		listView.setAdapter(new DetailsAdapter(context, R.layout.details_item, headers, details));
-		listView.setDivider(null);
+		listView.setDividerHeight(Math.max(1, Math.round(context.getResources().getDisplayMetrics().density)));
 		listView.setScrollbarFadingEnabled(false);
 
 		// Let the user long-click on a row to copy its value to the clipboard

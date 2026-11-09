@@ -83,6 +83,7 @@ import github.paroj.dsub2000.util.UpdateHelper;
 import github.paroj.dsub2000.util.UserUtil;
 import github.paroj.dsub2000.util.Util;
 import github.paroj.dsub2000.view.GridSpacingDecoration;
+import github.paroj.dsub2000.view.ListDividerDecoration;
 import github.paroj.dsub2000.view.PlaylistSongView;
 import github.paroj.dsub2000.view.UpdateView;
 
@@ -686,6 +687,12 @@ public class SubsonicFragment extends Fragment implements SwipeRefreshLayout.OnR
 
 	public void setupLayoutManager(RecyclerView recyclerView, boolean largeAlbums) {
 		recyclerView.setLayoutManager(getLayoutManager(recyclerView, largeAlbums));
+		for(int i = 0; i < recyclerView.getItemDecorationCount(); i++) {
+			if(recyclerView.getItemDecorationAt(i) instanceof ListDividerDecoration) {
+				return;
+			}
+		}
+		recyclerView.addItemDecoration(new ListDividerDecoration(context));
 	}
 	public RecyclerView.LayoutManager getLayoutManager(RecyclerView recyclerView, boolean largeCells) {
 		if(largeCells) {

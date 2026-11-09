@@ -6,7 +6,7 @@ Among all the Airsonic clients, DSub2000 is the only one that I like. But there 
 
 * Add preference to change the auto hide delay for media control
 * The settings fragment will get back to main setting list rather to main activity
-* Wrap the song title and album title when they are too long
+* Keep list names on one line with end ellipses, while preserving multiline player and detail titles
 * Add an Amperfy-inspired album detail header with centered artwork, album information, and Play/Shuffle buttons
 * Use a centered album toolbar title without a dropdown, duplicate playback buttons, or shadow
 * Recognize album details in tag browsing and folder/offline browsing when album metadata identifies the directory
@@ -18,3 +18,4 @@ Among all the Airsonic clients, DSub2000 is the only one that I like. But there 
 * Vertically center the portrait player's artwork, song information, and controls as a group while preserving queue behavior
 * Reduce repeat and queue icon sizes without changing their button sizes or touch targets
 * Remove top toolbar shadows throughout the app, including player and settings screens
+* Add themed separators to list rows, including playback queues and settings, without adding lines to artwork grids

@@ -4,6 +4,8 @@
 	android:layout_width="fill_parent"
 	android:layout_height="fill_parent"
 	android:drawSelectorOnTop="false"
+	android:divider="?android:attr/listDivider"
+	android:dividerHeight="1dp"
 	android:scrollbarAlwaysDrawVerticalTrack="true"
 	android:paddingTop="6dp"
 	android:paddingLeft="12dp"

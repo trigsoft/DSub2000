@@ -39,7 +39,7 @@
 				android:layout_gravity="left|top"
 				android:layout_weight="1"
 				android:drawablePadding="6dip"
-				android:ellipsize="marquee"
+				android:ellipsize="end"
 				android:paddingRight="6dp"
 				android:singleLine="true"
 				android:textAppearance="?android:attr/textAppearanceMedium"

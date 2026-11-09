@@ -43,7 +43,7 @@
 			android:layout_height="wrap_content"
 			android:textAppearance="?android:attr/textAppearanceMedium"
 			android:singleLine="true"
-			android:ellipsize="marquee"
+			android:ellipsize="end"
 			android:paddingBottom="6dip"
 			android:textColor="?android:textColorPrimary"/>
 

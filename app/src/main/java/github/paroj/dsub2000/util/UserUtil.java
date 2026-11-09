@@ -42,6 +42,7 @@ import github.paroj.dsub2000.service.OfflineException;
 import github.paroj.dsub2000.service.ServerTooOldException;
 import github.paroj.dsub2000.adapter.SettingsAdapter;
 import github.paroj.dsub2000.view.UpdateView;
+import github.paroj.dsub2000.view.ListDividerDecoration;
 
 public final class UserUtil {
 	private static final String TAG = UserUtil.class.getSimpleName();
@@ -425,6 +426,7 @@ public final class UserUtil {
 		LinearLayoutManager layoutManager = new LinearLayoutManager(context);
 		layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
 		recyclerView.setLayoutManager(layoutManager);
+		recyclerView.addItemDecoration(new ListDividerDecoration(context));
 		recyclerView.setAdapter(SettingsAdapter.getSettingsAdapter(context, user, null, true, new SectionAdapter.OnItemClickedListener<User.Setting>() {
 			@Override
 			public void onItemClicked(UpdateView<User.Setting> updateView, User.Setting item) {
