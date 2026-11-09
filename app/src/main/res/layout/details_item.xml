@@ -4,8 +4,8 @@
 	android:layout_height="match_parent"
 	android:orientation="horizontal"
 	android:padding="8dp"
-	android:paddingLeft="16dp"
-	android:paddingRight="16dp">
+	android:paddingLeft="@dimen/ListPadding.Horizontal"
+	android:paddingRight="@dimen/ListPadding.Horizontal">
 
 	<TextView
 		android:id="@+id/detail_name"
@@ -15,6 +15,7 @@
 		android:layout_weight="1"
 		android:paddingLeft="14dp"
 		android:textAppearance="?android:attr/textAppearanceMedium"
+		android:textSize="@dimen/ListText.Primary"
 		android:textColor="?android:textColorPrimary" />
 
 	<TextView
@@ -25,6 +26,7 @@
 		android:layout_weight="1"
 		android:paddingLeft="14dp"
 		android:textAppearance="?android:attr/textAppearanceSmall"
+		android:textSize="@dimen/ListText.Secondary"
 		android:textColor="?android:textColorSecondary" />
 
 </LinearLayout>

@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+	<style name="ListPreferenceText" parent="@android:style/TextAppearance.Material.Subhead">
+		<item name="android:textSize">15sp</item>
+	</style>
+	<style name="ListPreferenceText.Secondary" parent="@android:style/TextAppearance.Material.Body1">
+		<item name="android:textSize">@dimen/ListText.Secondary</item>
+	</style>
+
 	<style name="BasicButton">
 		<item name="android:background">?attr/selectableItemBackgroundBorderless</item>
 	</style>

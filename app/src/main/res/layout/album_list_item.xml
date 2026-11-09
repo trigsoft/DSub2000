@@ -4,7 +4,9 @@
 			  android:orientation="horizontal"
 			  android:layout_width="fill_parent"
 			  android:layout_height="wrap_content"
-			  android:background="?attr/selectableItemBackground">
+			  android:background="?attr/selectableItemBackground"
+			  android:paddingLeft="@dimen/ListPadding.Artwork"
+			  android:paddingRight="@dimen/ListPadding.Artwork">
 
 	<RelativeLayout
 		android:layout_width="@dimen/AlbumArt.Small"
@@ -42,6 +44,7 @@
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:textAppearance="?android:attr/textAppearanceMedium"
+			android:textSize="@dimen/ListText.Primary"
 			android:singleLine="true"
 			android:ellipsize="end"
 			android:paddingBottom="6dip"
@@ -52,6 +55,7 @@
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:textAppearance="?android:attr/textAppearanceSmall"
+			android:textSize="@dimen/ListText.Secondary"
 			android:singleLine="true"
 			android:textColor="?android:textColorSecondary"/>
 

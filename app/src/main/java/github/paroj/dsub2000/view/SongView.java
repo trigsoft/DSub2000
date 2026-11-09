@@ -44,6 +44,9 @@ public class SongView extends UpdateView2<MusicDirectory.Entry, Boolean> {
 	private static final String TAG = SongView.class.getSimpleName();
 
 	private TextView trackTextView;
+	private View albumTrackColumn;
+	private TextView albumTrackTextView;
+	private ImageView albumPlayingImageView;
 	private TextView titleTextView;
 	private TextView playingTextView;
 	private TextView artistTextView;
@@ -74,12 +77,21 @@ public class SongView extends UpdateView2<MusicDirectory.Entry, Boolean> {
 	private boolean isPlayed = false;
 	private boolean isPlayedShown = false;
 	private boolean showAlbum = false;
+	private final boolean albumTrackStyle;
 
 	public SongView(Context context) {
+		this(context, false);
+	}
+
+	public SongView(Context context, boolean albumTrackStyle) {
 		super(context);
+		this.albumTrackStyle = albumTrackStyle;
 		LayoutInflater.from(context).inflate(R.layout.song_list_item, this, true);
 
 		trackTextView = (TextView) findViewById(R.id.song_track);
+		albumTrackColumn = findViewById(R.id.album_song_track_column);
+		albumTrackTextView = (TextView) findViewById(R.id.album_song_track);
+		albumPlayingImageView = (ImageView) findViewById(R.id.album_song_playing);
 		titleTextView = (TextView) findViewById(R.id.song_title);
 		artistTextView = (TextView) findViewById(R.id.song_artist);
 		durationTextView = (TextView) findViewById(R.id.song_duration);
@@ -153,11 +165,17 @@ public class SongView extends UpdateView2<MusicDirectory.Entry, Boolean> {
 
 		String title = song.getTitle();
 		Integer track = song.getTrack();
-		if(song.getCustomOrder() != null) {
+		if(!albumTrackStyle && song.getCustomOrder() != null) {
 			track = song.getCustomOrder();
 		}
 		TextView newPlayingTextView;
-		if(track != null && Util.getDisplayTrack(context)) {
+		boolean showTrack = Util.getDisplayTrack(context);
+		if (albumTrackStyle) {
+			trackTextView.setVisibility(View.GONE);
+			albumTrackColumn.setVisibility(showTrack ? View.VISIBLE : View.GONE);
+			albumTrackTextView.setText(track != null && track > 0 ? String.valueOf(track) : "");
+			newPlayingTextView = showTrack ? albumTrackTextView : titleTextView;
+		} else if(track != null && showTrack) {
 			trackTextView.setText(String.format("%02d", track));
 			trackTextView.setVisibility(View.VISIBLE);
 			newPlayingTextView = trackTextView;
@@ -166,14 +184,11 @@ public class SongView extends UpdateView2<MusicDirectory.Entry, Boolean> {
 			newPlayingTextView = titleTextView;
 		}
 
-		if(newPlayingTextView != playingTextView || playingTextView == null) {
-			if(playing) {
-				playingTextView.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
-				playing = false;
-			}
-
-			playingTextView = newPlayingTextView;
+		if (playing) {
+			setPlayingIndicator(false);
+			playing = false;
 		}
+		playingTextView = newPlayingTextView;
 
 		titleTextView.setText(title);
 		artistTextView.setText(artist);
@@ -286,12 +301,12 @@ public class SongView extends UpdateView2<MusicDirectory.Entry, Boolean> {
 		if (playing) {
 			if(!this.playing) {
 				this.playing = playing;
-				playingTextView.setCompoundDrawablesWithIntrinsicBounds(DrawableTint.getDrawableRes(context, R.attr.playing), 0, 0, 0);
+				setPlayingIndicator(true);
 			}
 		} else {
 			if(this.playing) {
 				this.playing = playing;
-				playingTextView.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+				setPlayingIndicator(false);
 			}
 		}
 
@@ -363,6 +378,19 @@ public class SongView extends UpdateView2<MusicDirectory.Entry, Boolean> {
 
 	public MusicDirectory.Entry getEntry() {
 		return item;
+	}
+
+	private void setPlayingIndicator(boolean visible) {
+		if (playingTextView == albumTrackTextView) {
+			albumTrackTextView.setVisibility(visible ? View.INVISIBLE : View.VISIBLE);
+			if (visible) {
+				albumPlayingImageView.setImageResource(DrawableTint.getDrawableRes(context, R.attr.playing));
+			}
+			albumPlayingImageView.setVisibility(visible ? View.VISIBLE : View.GONE);
+		} else {
+			playingTextView.setCompoundDrawablesWithIntrinsicBounds(
+					visible ? DrawableTint.getDrawableRes(context, R.attr.playing) : 0, 0, 0, 0);
+		}
 	}
 
 	public void setShowPodcast(boolean showPodcast) {

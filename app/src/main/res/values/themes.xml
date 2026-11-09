@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<style name="Theme.DSub2000.Light.Base" parent="@style/Theme.AppCompat.Light.DarkActionBar">
+		<item name="android:textAppearanceListItem">@style/ListPreferenceText</item>
+		<item name="android:textAppearanceListItemSecondary">@style/ListPreferenceText.Secondary</item>
+		<item name="android:listPreferredItemPaddingStart">@dimen/ListPadding.Horizontal</item>
+		<item name="android:listPreferredItemPaddingEnd">@dimen/ListPadding.Horizontal</item>
 		<item name="element_color">@color/lightElement</item>
 		<item name="actionbar_element_color">@color/darkElement</item>
 		<item name="offline_icon">@drawable/main_offline</item>
@@ -76,6 +80,10 @@
 		<item name="drawerHeaderBackground">@drawable/drawer_header_light</item>
 	</style>
 	<style name="Theme.DSub2000.Dark.Base" parent="@style/Theme.AppCompat">
+		<item name="android:textAppearanceListItem">@style/ListPreferenceText</item>
+		<item name="android:textAppearanceListItemSecondary">@style/ListPreferenceText.Secondary</item>
+		<item name="android:listPreferredItemPaddingStart">@dimen/ListPadding.Horizontal</item>
+		<item name="android:listPreferredItemPaddingEnd">@dimen/ListPadding.Horizontal</item>
 		<item name="element_color">@color/darkElement</item>
 		<item name="actionbar_element_color">@color/darkElement</item>
 		<item name="offline_icon">@drawable/main_offline</item>

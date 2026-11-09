@@ -47,6 +47,7 @@ public class EntryGridAdapter extends SectionAdapter<Entry> {
 	private boolean showArtist = false;
 	private boolean showAlbum = false;
 	private boolean albumMenuOptions;
+	private boolean albumTrackStyle;
 	private boolean removeFromPlaylist = false;
 	private View header;
 
@@ -75,7 +76,7 @@ public class EntryGridAdapter extends SectionAdapter<Entry> {
 		if(viewType == VIEW_TYPE_ALBUM_LINE || viewType == VIEW_TYPE_ALBUM_CELL) {
 			updateView = new AlbumView(context, viewType == VIEW_TYPE_ALBUM_CELL);
 		} else if(viewType == VIEW_TYPE_SONG) {
-			updateView = new SongView(context);
+			updateView = new SongView(context, albumTrackStyle);
 		}
 
 		return new UpdateViewHolder(updateView);
@@ -134,6 +135,10 @@ public class EntryGridAdapter extends SectionAdapter<Entry> {
 
 	public void setShowAlbum(boolean showAlbum) {
 		this.showAlbum = showAlbum;
+	}
+
+	public void setAlbumTrackStyle(boolean albumTrackStyle) {
+		this.albumTrackStyle = albumTrackStyle;
 	}
 
 	public void removeAt(List<Integer> indices) {

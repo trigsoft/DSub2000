@@ -8,6 +8,10 @@
 	<dimen name="AlbumArt.Detail">213dp</dimen>
 	<dimen name="Star.Small">20dp</dimen>
 	<dimen name="SongStatusIcon">24dp</dimen>
+	<dimen name="ListText.Primary">16sp</dimen>
+	<dimen name="ListText.Secondary">13sp</dimen>
+	<dimen name="ListPadding.Horizontal">20dp</dimen>
+	<dimen name="ListPadding.Artwork">8dp</dimen>
 	<dimen name="Card.Radius">4dp</dimen>
 	<dimen name="Card.TextLeftPadding">8dp</dimen>
 	<dimen name="Card.MarginsForShadow">2dp</dimen>

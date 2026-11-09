@@ -753,6 +753,7 @@ public class SelectDirectoryFragment extends SubsonicFragment implements Section
 			});
 		}
 		entryGridAdapter.setOnItemClickedListener(this);
+		entryGridAdapter.setAlbumTrackStyle(isAlbumDetailHeader());
 		entryGridAdapter.setAlbumMenuOptions(albumListType != null || artist);
 		// Always show artist if this is not a artist we are viewing
 		if(!artist) {

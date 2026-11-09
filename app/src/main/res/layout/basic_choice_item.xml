@@ -4,8 +4,8 @@
 	android:layout_height="wrap_content"
 	android:background="?attr/selectableItemBackground"
 	android:orientation="horizontal"
-	android:paddingLeft="16dp"
-	android:paddingRight="16dp">
+	android:paddingLeft="@dimen/ListPadding.Horizontal"
+	android:paddingRight="@dimen/ListPadding.Horizontal">
 
 	<TextView
 		android:id="@+id/item_name"
@@ -15,6 +15,7 @@
 		android:background="@android:color/transparent"
 		android:gravity="left|center_vertical"
 		android:textAppearance="?android:attr/textAppearanceMedium"
+		android:textSize="@dimen/ListText.Primary"
 		android:textColor="?android:textColorPrimary" />
 
 	<CheckBox

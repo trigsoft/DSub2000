@@ -3,7 +3,9 @@
 	android:orientation="horizontal"
 	android:layout_width="fill_parent"
 	android:layout_height="wrap_content"
-	android:background="?attr/selectableItemBackground">
+	android:background="?attr/selectableItemBackground"
+	android:paddingLeft="@dimen/ListPadding.Artwork"
+	android:paddingRight="@dimen/ListPadding.Artwork">
 
 	<github.paroj.dsub2000.view.RecyclingImageView
 		android:id="@+id/item_art"
@@ -20,6 +22,7 @@
 		android:paddingLeft="10dip"
 		android:paddingRight="3dip"
 		android:textAppearance="?android:attr/textAppearanceMedium"
+		android:textSize="@dimen/ListText.Primary"
 		android:singleLine="true"
 		android:ellipsize="end"
 		android:textColor="?android:textColorPrimary"/>

@@ -4,8 +4,8 @@
 	android:layout_height="?android:attr/listPreferredItemHeight"
 	android:background="?attr/selectableItemBackground"
 	android:orientation="horizontal"
-	android:paddingLeft="16dp"
-	android:paddingRight="16dp">
+	android:paddingLeft="@dimen/ListPadding.Horizontal"
+	android:paddingRight="@dimen/ListPadding.Horizontal">
 
 	<LinearLayout
 		android:layout_width="0dip"
@@ -23,6 +23,7 @@
 			android:singleLine="true"
 			android:ellipsize="end"
 			android:textAppearance="?android:attr/textAppearanceMedium"
+			android:textSize="@dimen/ListText.Primary"
 			android:textColor="?android:textColorPrimary" />
 
 		<TextView
@@ -31,6 +32,7 @@
 			android:layout_height="wrap_content"
 			android:background="@android:color/transparent"
 			android:textAppearance="?android:attr/textAppearanceSmall"
+			android:textSize="@dimen/ListText.Secondary"
 			android:textColor="?android:textColorSecondary" />
 	</LinearLayout>
 
