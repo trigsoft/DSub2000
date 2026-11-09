@@ -18,6 +18,8 @@ package github.paroj.dsub2000.view;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Path;
+import android.graphics.RectF;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.TransitionDrawable;
@@ -28,6 +30,10 @@ import android.widget.ImageView;
 public class RecyclingImageView extends ImageView {
 	private boolean invalidated = false;
 	private OnInvalidated onInvalidated;
+	private OnDrawableChangedListener onDrawableChangedListener;
+	private final Path clipPath = new Path();
+	private final RectF clipBounds = new RectF();
+	private float cornerRadius;
 
 	public RecyclingImageView(Context context) {
 		super(context);
@@ -48,6 +54,14 @@ public class RecyclingImageView extends ImageView {
 
 	@Override
 	public void onDraw(Canvas canvas) {
+		if(cornerRadius > 0) {
+			clipBounds.set(0, 0, getWidth(), getHeight());
+			clipPath.reset();
+			clipPath.addRoundRect(clipBounds, cornerRadius, cornerRadius, Path.Direction.CW);
+			canvas.save();
+			canvas.clipPath(clipPath);
+		}
+
 		Drawable drawable = this.getDrawable();
 		if(drawable != null) {
 			if(drawable instanceof BitmapDrawable) {
@@ -78,12 +92,27 @@ public class RecyclingImageView extends ImageView {
 		}
 
 		super.onDraw(canvas);
+		if(cornerRadius > 0) {
+			canvas.restore();
+		}
 	}
 
 	@Override
 	public void setImageDrawable(Drawable drawable) {
 		super.setImageDrawable(drawable);
 		setInvalidated(false);
+		if(onDrawableChangedListener != null) {
+			onDrawableChangedListener.onDrawableChanged(drawable);
+		}
+	}
+
+	public void setCornerRadius(float cornerRadius) {
+		this.cornerRadius = cornerRadius;
+		invalidate();
+	}
+
+	public void setOnDrawableChangedListener(OnDrawableChangedListener listener) {
+		onDrawableChangedListener = listener;
 	}
 
 	private boolean isBitmapRecycled(Drawable drawable) {
@@ -116,5 +145,9 @@ public class RecyclingImageView extends ImageView {
 
 	public interface OnInvalidated {
 		void onInvalidated(RecyclingImageView imageView);
+	}
+
+	public interface OnDrawableChangedListener {
+		void onDrawableChanged(Drawable drawable);
 	}
 }

@@ -99,7 +99,6 @@ public class SubsonicFragmentActivity extends SubsonicActivity implements Downlo
 	private NowPlayingFragment nowPlayingFragment;
 	private SubsonicFragment secondaryFragment;
 	private MaterialToolbar mainToolbar;
-	private float mainToolbarElevation;
 	private Toolbar nowPlayingToolbar;
 
 	private View bottomBar;
@@ -277,7 +276,6 @@ public class SubsonicFragmentActivity extends SubsonicActivity implements Downlo
 
 		bottomBar = findViewById(R.id.bottom_bar);
 		mainToolbar = (MaterialToolbar) findViewById(R.id.main_toolbar);
-		mainToolbarElevation = mainToolbar.getElevation();
 		nowPlayingToolbar = (Toolbar) findViewById(R.id.now_playing_toolbar);
 		coverArtView = (ImageView) bottomBar.findViewById(R.id.album_art);
 		trackView = (TextView) bottomBar.findViewById(R.id.track_name);
@@ -616,7 +614,6 @@ public class SubsonicFragmentActivity extends SubsonicActivity implements Downlo
 				&& currentFragment instanceof SelectDirectoryFragment
 				&& ((SelectDirectoryFragment) currentFragment).isAlbumDetailHeader();
 		mainToolbar.setTitleCentered(centeredAlbumTitle);
-		mainToolbar.setElevation(centeredAlbumTitle ? 0f : mainToolbarElevation);
 		if(!centeredAlbumTitle) {
 			super.recreateSpinner();
 			return;

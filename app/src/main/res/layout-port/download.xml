@@ -25,26 +25,30 @@
 				android:background="@android:color/transparent">
 
 				<FrameLayout
+					android:id="@+id/download_cover_stage"
 					android:layout_width="match_parent"
 					android:layout_height="0dp"
-					android:layout_weight="1">
+					android:layout_weight="1"
+					android:layout_marginBottom="24dp">
 
-					<FrameLayout android:orientation="vertical"
-						android:layout_width="match_parent"
-						android:layout_height="wrap_content">
+					<FrameLayout
+						android:id="@+id/download_cover_container"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_gravity="center">
 
 						<github.paroj.dsub2000.view.RecyclingImageView
 							android:id="@+id/download_album_art_image"
-							android:layout_width="wrap_content"
-							android:layout_height="wrap_content"
+							android:layout_width="match_parent"
+							android:layout_height="match_parent"
 							android:scaleType="fitCenter"
-							android:layout_gravity="center_horizontal|top"/>
+							android:layout_gravity="center"/>
 
 						<LinearLayout
 							android:id="@+id/download_overlay_buttons"
 							android:layout_width="match_parent"
 							android:layout_height="wrap_content"
-							android:layout_gravity="center_horizontal|bottom"
+							android:layout_gravity="bottom"
 							android:background="@color/overlayColor"
 							android:gravity="center"
 							android:orientation="horizontal"
@@ -114,7 +118,11 @@
 
 		</ViewFlipper>
 
-		<include layout="@layout/download_media_buttons"/>
+		<include
+			layout="@layout/download_media_buttons"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="16dp"/>
 
 		<include layout="@layout/download_slider"/>
 	</LinearLayout>

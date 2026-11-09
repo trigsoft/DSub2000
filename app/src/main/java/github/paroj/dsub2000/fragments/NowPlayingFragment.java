@@ -26,18 +26,26 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.TransitionDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import androidx.core.view.MenuItemCompat;
 import androidx.mediarouter.app.MediaRouteButton;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Display;
 import android.view.GestureDetector;
 import android.view.GestureDetector.OnGestureListener;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -46,9 +54,12 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.view.animation.AnimationUtils;
 import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.SeekBar;
@@ -77,6 +88,8 @@ import github.paroj.dsub2000.util.SilentBackgroundTask;
 import github.paroj.dsub2000.adapter.DownloadFileAdapter;
 import github.paroj.dsub2000.view.FadeOutAnimation;
 import github.paroj.dsub2000.view.FastScroller;
+import github.paroj.dsub2000.view.ArtworkBackdropDrawable;
+import github.paroj.dsub2000.view.RecyclingImageView;
 import github.paroj.dsub2000.view.UpdateView;
 import github.paroj.dsub2000.util.Util;
 
@@ -85,6 +98,8 @@ import static github.paroj.dsub2000.domain.PlayerState.*;
 import github.paroj.dsub2000.util.*;
 import github.paroj.dsub2000.view.AutoRepeatButton;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Future;
 import java.util.concurrent.ScheduledFuture;
 
 public class NowPlayingFragment extends SubsonicFragment implements OnGestureListener, SectionAdapter.OnItemClickedListener<DownloadFile>, OnSongChangedListener {
@@ -100,6 +115,15 @@ public class NowPlayingFragment extends SubsonicFragment implements OnGestureLis
 	private TextView emptyTextView;
 	private TextView songTitleTextView;
 	private ImageView albumArtImageView;
+	private View coverStage;
+	private View coverContainer;
+	private ViewTreeObserver.OnGlobalLayoutListener coverSizeListener;
+	private View playerLayout;
+	private boolean showArtworkGradient;
+	private final Handler artworkBackgroundHandler = new Handler(Looper.getMainLooper());
+	private ExecutorService artworkBackgroundExecutor;
+	private Future<?> artworkBackgroundTask;
+	private int artworkBackgroundRequestId;
 	private RecyclerView playlistView;
 	private TextView positionTextView;
 	private TextView durationTextView;
@@ -160,6 +184,7 @@ public class NowPlayingFragment extends SubsonicFragment implements OnGestureLis
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
 		rootView = inflater.inflate(R.layout.download, container, false);
+		artworkBackgroundExecutor = Executors.newSingleThreadExecutor();
 		setTitle(R.string.button_bar_now_playing);
 
 		WindowManager w = context.getWindowManager();
@@ -172,6 +197,33 @@ public class NowPlayingFragment extends SubsonicFragment implements OnGestureLis
 		emptyTextView = (TextView)rootView.findViewById(R.id.download_empty);
 		songTitleTextView = (TextView)rootView.findViewById(R.id.download_song_title);
 		albumArtImageView = (ImageView)rootView.findViewById(R.id.download_album_art_image);
+		playerLayout = rootView.findViewById(R.id.download_layout);
+		if(playerLayout != null) {
+			playerLayout.setBackgroundColor(getPlayerBackgroundColor());
+		}
+		if(albumArtImageView instanceof RecyclingImageView) {
+			RecyclingImageView recyclingImageView = (RecyclingImageView) albumArtImageView;
+			recyclingImageView.setCornerRadius(5 * getResources().getDisplayMetrics().density);
+			recyclingImageView.setOnDrawableChangedListener(new RecyclingImageView.OnDrawableChangedListener() {
+				@Override
+				public void onDrawableChanged(Drawable drawable) {
+					if(showArtworkGradient) {
+						updateArtworkBackground(drawable);
+					}
+				}
+			});
+		}
+		coverStage = rootView.findViewById(R.id.download_cover_stage);
+		coverContainer = rootView.findViewById(R.id.download_cover_container);
+		if(coverStage != null && coverContainer != null) {
+			coverSizeListener = new ViewTreeObserver.OnGlobalLayoutListener() {
+				@Override
+				public void onGlobalLayout() {
+					updatePlayerContentPosition();
+				}
+			};
+			rootView.getViewTreeObserver().addOnGlobalLayoutListener(coverSizeListener);
+		}
 		positionTextView = (TextView)rootView.findViewById(R.id.download_position);
 		durationTextView = (TextView)rootView.findViewById(R.id.download_duration);
 		statusTextView = (TextView)rootView.findViewById(R.id.download_status);
@@ -468,6 +520,113 @@ public class NowPlayingFragment extends SubsonicFragment implements OnGestureLis
 		});
 
 		return rootView;
+	}
+
+	private void updatePlayerContentPosition() {
+		if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+			if(playlistFlipper.getParent() == rootView.findViewById(R.id.download_control_layout)) {
+				LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) playlistFlipper.getLayoutParams();
+				boolean showingQueue = playlistFlipper.getDisplayedChild() == 1;
+				int height = showingQueue ? 0 : ViewGroup.LayoutParams.WRAP_CONTENT;
+				float weight = showingQueue ? 1f : 0f;
+				if(params.height != height || params.weight != weight) {
+					params.height = height;
+					params.weight = weight;
+					playlistFlipper.setLayoutParams(params);
+				}
+			}
+			int availableSize = Math.min(coverStage.getWidth(), coverStage.getHeight());
+			if(availableSize > 0) {
+				setPlayerCoverSize(Math.round(availableSize * 0.90f));
+			}
+			return;
+		}
+
+		if(playlistFlipper.getDisplayedChild() != 0) {
+			if(playerLayout.getPaddingTop() != 0 || playerLayout.getPaddingBottom() != 0) {
+				playerLayout.setPadding(playerLayout.getPaddingLeft(), 0, playerLayout.getPaddingRight(), 0);
+			}
+			return;
+		}
+
+		int width = playerLayout.getWidth() - playerLayout.getPaddingLeft() - playerLayout.getPaddingRight();
+		int height = playerLayout.getHeight();
+		if(width <= 0 || height <= 0) {
+			return;
+		}
+
+		ViewGroup content = (ViewGroup) playerLayout;
+		ViewGroup artworkLayout = (ViewGroup) coverStage.getParent();
+		int controlsHeight = artworkLayout.getPaddingTop() + artworkLayout.getPaddingBottom();
+		for(int i = 0; i < content.getChildCount(); i++) {
+			View child = content.getChildAt(i);
+			if(child != playlistFlipper) {
+				controlsHeight += getOccupiedHeight(child);
+			}
+		}
+		for(int i = 0; i < artworkLayout.getChildCount(); i++) {
+			View child = artworkLayout.getChildAt(i);
+			if(child != coverStage) {
+				controlsHeight += getOccupiedHeight(child);
+			}
+		}
+		ViewGroup.MarginLayoutParams stageParams = (ViewGroup.MarginLayoutParams) coverStage.getLayoutParams();
+		controlsHeight += stageParams.topMargin + stageParams.bottomMargin;
+
+		int coverSize = Math.min(Math.round(width * 0.90f), Math.max(0, height - controlsHeight));
+		setPlayerCoverSize(coverSize);
+
+		// Center the complete artwork/metadata/control group, not just the artwork stage.
+		int remainingSpace = Math.max(0, height - controlsHeight - coverSize);
+		int topPadding = remainingSpace / 2;
+		int bottomPadding = remainingSpace - topPadding;
+		if(playerLayout.getPaddingTop() != topPadding || playerLayout.getPaddingBottom() != bottomPadding) {
+			playerLayout.setPadding(playerLayout.getPaddingLeft(), topPadding,
+					playerLayout.getPaddingRight(), bottomPadding);
+		}
+	}
+
+	private void setPlayerCoverSize(int coverSize) {
+		FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) coverContainer.getLayoutParams();
+		if(params.width != coverSize || params.height != coverSize) {
+			params.width = coverSize;
+			params.height = coverSize;
+			params.gravity = Gravity.CENTER;
+			coverContainer.setLayoutParams(params);
+		}
+	}
+
+	private int getOccupiedHeight(View view) {
+		if(view.getVisibility() == View.GONE) {
+			return 0;
+		}
+		ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) view.getLayoutParams();
+		return view.getMeasuredHeight() + params.topMargin + params.bottomMargin;
+	}
+
+	@Override
+	public void onDestroyView() {
+		artworkBackgroundRequestId++;
+		if(artworkBackgroundTask != null) {
+			artworkBackgroundTask.cancel(true);
+			artworkBackgroundTask = null;
+		}
+		if(artworkBackgroundExecutor != null) {
+			artworkBackgroundExecutor.shutdownNow();
+			artworkBackgroundExecutor = null;
+		}
+		if(coverSizeListener != null && rootView.getViewTreeObserver().isAlive()) {
+			rootView.getViewTreeObserver().removeOnGlobalLayoutListener(coverSizeListener);
+		}
+		if(albumArtImageView instanceof RecyclingImageView) {
+			((RecyclingImageView) albumArtImageView).setOnDrawableChangedListener(null);
+		}
+		coverStage = null;
+		coverContainer = null;
+		coverSizeListener = null;
+		playerLayout = null;
+		albumArtImageView = null;
+		super.onDestroyView();
 	}
 
 	@Override
@@ -775,7 +934,7 @@ public class NowPlayingFragment extends SubsonicFragment implements OnGestureLis
 		updateButtons();
 
 		if(currentPlaying == null && downloadService != null && currentPlaying == downloadService.getCurrentPlaying()) {
-			getImageLoader().loadImage(albumArtImageView, (Entry) null, true, false);
+			loadAlbumArt(null, false);
 		}
 
 		context.runWhenServiceAvailable(new Runnable() {
@@ -1291,7 +1450,7 @@ public class NowPlayingFragment extends SubsonicFragment implements OnGestureLis
 		if (currentPlaying != null) {
 			Entry song = currentPlaying.getSong();
 			songTitleTextView.setText(song.getTitle());
-			getImageLoader().loadImage(albumArtImageView, song, true, true);
+			loadAlbumArt(song, true);
 
 			DownloadService downloadService = getDownloadService();
 			if(downloadService.isCurrentPlayingSingle()) {
@@ -1305,9 +1464,99 @@ public class NowPlayingFragment extends SubsonicFragment implements OnGestureLis
 			}
 		} else {
 			songTitleTextView.setText(null);
-			getImageLoader().loadImage(albumArtImageView, (Entry) null, true, false);
+			loadAlbumArt(null, false);
 			setSubtitle(null);
 		}
+	}
+
+	private void loadAlbumArt(Entry song, boolean crossfade) {
+		artworkBackgroundRequestId++;
+		if(artworkBackgroundTask != null) {
+			artworkBackgroundTask.cancel(true);
+			artworkBackgroundTask = null;
+		}
+		showArtworkGradient = song != null && song.getCoverArt() != null;
+		if(playerLayout != null) {
+			playerLayout.setBackgroundColor(getPlayerBackgroundColor());
+		}
+		getImageLoader().loadImage(albumArtImageView, song, true, crossfade);
+	}
+
+	private int getPlayerBackgroundColor() {
+		TypedValue value = new TypedValue();
+		if(context.getTheme().resolveAttribute(android.R.attr.colorBackground, value, true)) {
+			if(value.resourceId != 0) {
+				return context.getResources().getColor(value.resourceId);
+			}
+			return value.data;
+		}
+		return Color.WHITE;
+	}
+
+	private void updateArtworkBackground(Drawable drawable) {
+		if(playerLayout == null) {
+			return;
+		}
+		if(drawable == null) {
+			playerLayout.setBackgroundColor(getPlayerBackgroundColor());
+			return;
+		}
+
+		Drawable artwork = drawable;
+		if(drawable instanceof TransitionDrawable) {
+			TransitionDrawable transition = (TransitionDrawable) drawable;
+			artwork = transition.getDrawable(transition.getNumberOfLayers() - 1);
+		}
+		if(!(artwork instanceof BitmapDrawable)) {
+			playerLayout.setBackgroundColor(getPlayerBackgroundColor());
+			return;
+		}
+
+		Bitmap bitmap = ((BitmapDrawable) artwork).getBitmap();
+		if(bitmap == null || bitmap.isRecycled()) {
+			return;
+		}
+
+		if(artworkBackgroundExecutor == null) {
+			return;
+		}
+		int sampleWidth = Math.min(64, bitmap.getWidth());
+		int sampleHeight = Math.min(64, bitmap.getHeight());
+		if(sampleWidth <= 0 || sampleHeight <= 0) {
+			return;
+		}
+		int[] sampledPixels = new int[sampleWidth * sampleHeight];
+		try {
+			for(int y = 0; y < sampleHeight; y++) {
+				int sourceY = Math.min(bitmap.getHeight() - 1,
+						(int) ((y + 0.5f) * bitmap.getHeight() / sampleHeight));
+				for(int x = 0; x < sampleWidth; x++) {
+					int sourceX = Math.min(bitmap.getWidth() - 1,
+							(int) ((x + 0.5f) * bitmap.getWidth() / sampleWidth));
+					sampledPixels[y * sampleWidth + x] = bitmap.getPixel(sourceX, sourceY);
+				}
+			}
+		} catch(IllegalStateException recycledBitmap) {
+			return;
+		}
+
+		final int requestId = artworkBackgroundRequestId;
+		final int surfaceColor = getPlayerBackgroundColor();
+		artworkBackgroundTask = artworkBackgroundExecutor.submit(new Runnable() {
+			@Override
+			public void run() {
+				final ArtworkBackdropDrawable background =
+						ArtworkBackdropDrawable.create(sampledPixels, sampleWidth, sampleHeight, surfaceColor);
+				artworkBackgroundHandler.post(new Runnable() {
+					@Override
+					public void run() {
+						if(requestId == artworkBackgroundRequestId && playerLayout != null && showArtworkGradient) {
+							playerLayout.setBackground(background);
+						}
+					}
+				});
+			}
+		});
 	}
 
 	@Override
@@ -1488,7 +1737,7 @@ public class NowPlayingFragment extends SubsonicFragment implements OnGestureLis
 		}
 
 		if(song != null && albumArtImageView != null && fieldChange == DownloadService.METADATA_UPDATED_COVER_ART) {
-			getImageLoader().loadImage(albumArtImageView, song, true, true);
+			loadAlbumArt(song, true);
 		}
 	}
 

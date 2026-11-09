@@ -19,7 +19,7 @@
 			android:layout_height="?attr/actionBarSize"
 			android:layout_width="match_parent"
 			android:background="?attr/actionbarBackgroundColor"
-			android:elevation="4dp"
+			android:elevation="0dp"
 			android:theme="?attr/actionbarThemeStyle"
 			app:popupTheme="?attr/actionbarPopupStyle"/>
 
@@ -42,7 +42,7 @@
 				android:id="@+id/now_playing_toolbar"
 				android:layout_height="?attr/actionBarSize"
 				android:layout_width="match_parent"
-				android:elevation="4dp"
+				android:elevation="0dp"
 				android:visibility="gone"
 				android:theme="?attr/actionbarThemeStyle"
 				app:popupTheme="?attr/actionbarPopupStyle"/>
