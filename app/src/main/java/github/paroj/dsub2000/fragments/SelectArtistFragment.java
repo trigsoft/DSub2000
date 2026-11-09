@@ -91,6 +91,10 @@ public class SelectArtistFragment extends SelectRecyclerFragment<Serializable> {
 
 		super.onCreateView(inflater, container, bundle);
 
+		if (groupId != null && objects != null) {
+			rootView.post(this::openAlbumIfNeeded);
+		}
+
 		return rootView;
 	}
 
@@ -254,6 +258,36 @@ public class SelectArtistFragment extends SelectRecyclerFragment<Serializable> {
 	@Override
 	public int getTitleResource() {
 		return groupId == null && !showArtists ? R.string.button_bar_browse : 0;
+	}
+
+	@Override
+	public void onFinishRefresh() {
+		openAlbumIfNeeded();
+	}
+
+	private void openAlbumIfNeeded() {
+		if (groupId == null || objects == null || !isAdded()
+				|| context.getCurrentFragment() != this) {
+			return;
+		}
+		List<Entry> tracks = new ArrayList<>();
+		for (Serializable item : objects) {
+			if (!(item instanceof Entry)) {
+				return;
+			}
+			tracks.add((Entry) item);
+		}
+		if (!SelectDirectoryFragment.hasAlbumTrackMetadata(new MusicDirectory(tracks))) {
+			return;
+		}
+
+		SubsonicFragment fragment = new SelectDirectoryFragment();
+		Bundle args = new Bundle();
+		args.putString(Constants.INTENT_EXTRA_NAME_ID, groupId);
+		args.putString(Constants.INTENT_EXTRA_NAME_NAME, groupName);
+		args.putBoolean(Constants.INTENT_EXTRA_ALBUM_DETAIL, true);
+		fragment.setArguments(args);
+		replaceExistingFragment(fragment);
 	}
 
 	@Override

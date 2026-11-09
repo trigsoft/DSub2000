@@ -165,6 +165,9 @@ public class SelectDirectoryFragment extends SubsonicFragment implements Section
 			artist = args.getBoolean(Constants.INTENT_EXTRA_NAME_ARTIST, false);
 			artistArgument = artist;
 			albumDetailRequested = args.getBoolean(Constants.INTENT_EXTRA_ALBUM_DETAIL, false);
+			if (albumDetailHeaderRoute && artistArgument) {
+				artist = false;
+			}
 			lookupEntry = args.getString(Constants.INTENT_EXTRA_SEARCH_SONG);
 			topTracks = args.getBoolean(Constants.INTENT_EXTRA_TOP_TRACKS);
 			showAll = args.getBoolean(Constants.INTENT_EXTRA_SHOW_ALL);
@@ -1110,8 +1113,6 @@ public class SelectDirectoryFragment extends SubsonicFragment implements Section
 				&& podcastDescription == null
 				&& share == null
 				&& albumListType == null
-				&& !artistArgument
-				&& !artist
 				&& !artistOverride
 				&& !topTracks
 				&& !showAll
@@ -1120,18 +1121,22 @@ public class SelectDirectoryFragment extends SubsonicFragment implements Section
 			return false;
 		}
 
+		if (artistArgument || artist) {
+			return (!Util.isTagBrowsing(context) || Util.isOffline(context))
+					&& hasAlbumTrackMetadata(loadedDirectory);
+		}
+
 		return albumDetailRequested
 				|| (Util.isTagBrowsing(context) && !Util.isOffline(context))
-				|| hasAlbumTrackMetadata(loadedDirectory, directory);
+				|| hasAlbumTrackMetadata(loadedDirectory);
 	}
 
-	static boolean hasAlbumTrackMetadata(MusicDirectory loadedDirectory, Entry directory) {
+	static boolean hasAlbumTrackMetadata(MusicDirectory loadedDirectory) {
 		if (loadedDirectory == null || loadedDirectory.getChildren().isEmpty()) {
 			return false;
 		}
 
 		String albumName = null;
-		String albumArtist = directory == null ? null : directory.getArtist();
 		for (Entry entry : loadedDirectory.getChildren()) {
 			if (entry.isDirectory()
 					|| entry.getAlbum() == null
@@ -1144,19 +1149,12 @@ public class SelectDirectoryFragment extends SubsonicFragment implements Section
 			} else if (!albumName.equalsIgnoreCase(trackAlbum)) {
 				return false;
 			}
-
-			String trackArtist = entry.getArtist();
-			if ((albumArtist == null || albumArtist.trim().isEmpty())
-					&& trackArtist != null && !trackArtist.trim().isEmpty()) {
-				albumArtist = trackArtist;
-			}
 		}
-		return albumArtist != null && !albumArtist.trim().isEmpty();
+		return true;
 	}
 
 	public boolean isAlbumDetailHeader() {
 		return albumDetailHeaderRoute
-				&& !artistArgument
 				&& !artist
 				&& artistInfo == null
 				&& artistInfoDelayed == null;

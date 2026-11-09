@@ -16,7 +16,7 @@ public class SelectDirectoryFragmentTest {
 		folder.addChild(track("Album", "Artist"));
 		folder.addChild(track(" album ", "Artist"));
 
-		assertTrue(SelectDirectoryFragment.hasAlbumTrackMetadata(folder, null));
+		assertTrue(SelectDirectoryFragment.hasAlbumTrackMetadata(folder));
 	}
 
 	@Test
@@ -24,26 +24,26 @@ public class SelectDirectoryFragmentTest {
 		MusicDirectory folder = new MusicDirectory();
 		folder.addChild(track("First album", "Artist"));
 		folder.addChild(track("Second album", "Artist"));
-		assertFalse(SelectDirectoryFragment.hasAlbumTrackMetadata(folder, null));
+		assertFalse(SelectDirectoryFragment.hasAlbumTrackMetadata(folder));
 
 		folder = new MusicDirectory();
 		folder.addChild(track("First album", "Artist"));
 		folder.addChild(track(" ", "Artist"));
-		assertFalse(SelectDirectoryFragment.hasAlbumTrackMetadata(folder, null));
+		assertFalse(SelectDirectoryFragment.hasAlbumTrackMetadata(folder));
 	}
 
 	@Test
-	public void rejectsNestedFoldersAndMissingArtist() {
+	public void rejectsNestedFoldersButAllowsMissingArtist() {
 		MusicDirectory folder = new MusicDirectory();
 		folder.addChild(track("Album", "Artist"));
 		Entry childFolder = new Entry();
 		childFolder.setDirectory(true);
 		folder.addChild(childFolder);
-		assertFalse(SelectDirectoryFragment.hasAlbumTrackMetadata(folder, null));
+		assertFalse(SelectDirectoryFragment.hasAlbumTrackMetadata(folder));
 
 		folder = new MusicDirectory();
 		folder.addChild(track("Album", null));
-		assertFalse(SelectDirectoryFragment.hasAlbumTrackMetadata(folder, null));
+		assertTrue(SelectDirectoryFragment.hasAlbumTrackMetadata(folder));
 	}
 
 	private Entry track(String album, String artist) {

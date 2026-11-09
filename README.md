@@ -10,7 +10,7 @@ Among all the Airsonic clients, DSub2000 is the only one that I like. But there 
 * Show multiple music libraries as a folder selection list, including an all-folders option
 * Add an Amperfy-inspired album detail header with centered artwork, album information, and Play/Shuffle buttons
 * Use a centered album toolbar title without a dropdown, duplicate playback buttons, or shadow
-* Recognize album details in tag browsing and folder/offline browsing when consistent track metadata identifies an album, even if its folder name differs
+* Recognize album folders, including those directly under a music library, when all tracks share a non-empty album name and there are no subfolders, regardless of folder name or missing artist metadata
 * Add separate song and album settings for showing favorites, sharing, and ratings under Settings > Appearance; existing visibility preferences are preserved
 * Add an Amperfy-inspired player backdrop using two dominant artwork colors, a vertical gradient, and blurred artwork
 * Display rounded player artwork at up to 90% of the available width, shrinking when vertical space is limited
