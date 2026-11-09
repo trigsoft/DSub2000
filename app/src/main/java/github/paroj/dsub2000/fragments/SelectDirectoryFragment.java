@@ -1390,9 +1390,8 @@ public class SelectDirectoryFragment extends SubsonicFragment implements Section
 	}
 
 	private void setupAlbumDetailTextDisplay(View header, TextView titleView) {
-		titleView.setText(name);
-
 		int songCount = 0;
+		String albumTitle = null;
 		Set<String> artists = new HashSet<String>();
 		Set<Integer> years = new HashSet<Integer>();
 		Set<String> genres = new HashSet<String>();
@@ -1400,6 +1399,10 @@ public class SelectDirectoryFragment extends SubsonicFragment implements Section
 		for (Entry entry : entries) {
 			if (!entry.isDirectory()) {
 				songCount++;
+				if (albumTitle == null && entry.getAlbum() != null
+						&& !entry.getAlbum().trim().isEmpty()) {
+					albumTitle = entry.getAlbum().trim();
+				}
 				if (entry.getArtist() != null && !entry.getArtist().trim().isEmpty()) {
 					artists.add(entry.getArtist());
 				}
@@ -1415,6 +1418,8 @@ public class SelectDirectoryFragment extends SubsonicFragment implements Section
 				}
 			}
 		}
+
+		titleView.setText(albumTitle != null ? albumTitle : name);
 
 		String albumArtist = directory == null ? null : directory.getArtist();
 		if (albumArtist == null || albumArtist.trim().isEmpty()) {
